@@ -8,11 +8,13 @@ services:
     ports:
       - 80:8080
     volumes:
-    - .:/var/www/html
+    - ./:/var/www/html
     environment:
       XDEBUG_CONFIG: "remote_host=172.17.0.1 remote_enable=1"
       PHP_IDE_CONFIG: "serverName=Docker"
     depends_on: [rabbit]
+    networks:
+      - app-network
 
   rabbit:
     hostname: rabbitmq
@@ -21,12 +23,16 @@ services:
       dockerfile: Dockerfile-rabbit
     ports:
       - 15672:15672
+    networks:
+      - app-network
 
   redis:
     hostname: redis:alpine
     volumes:
     - ./DB_DATA/redis:/data
     image: redis
+    networks:
+      - app-network
 
   mysql:
     hostname: db
@@ -39,3 +45,9 @@ services:
       MYSQL_USER: 'relasuser'
       MYSQL_PASSWORD: 'relaspass'
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge

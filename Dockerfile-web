@@ -12,5 +12,4 @@ COPY . /var/www/html/
 
 RUN sed -i 's#/var/www/html#/var/www/html/public#g' /etc/nginx/sites-enabled/default.conf
 
-RUN cd /var/www/html && composer install \
-    && rm -rf /root/.composer/cache
+RUN cd /var/www/html && composer install
