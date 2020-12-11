@@ -60,3 +60,5 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+/DB_DATA/mysql/
+/DB_DATA/redis/
