@@ -1,0 +1,41 @@
+version: '3.5'
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile-web
+    ports:
+      - 80:8080
+    volumes:
+    - .:/var/www/html
+    environment:
+      XDEBUG_CONFIG: "remote_host=172.17.0.1 remote_enable=1"
+      PHP_IDE_CONFIG: "serverName=Docker"
+    depends_on: [rabbit]
+
+  rabbit:
+    hostname: rabbitmq
+    build:
+      context: .
+      dockerfile: Dockerfile-rabbit
+    ports:
+      - 15672:15672
+
+  redis:
+    hostname: redis:alpine
+    volumes:
+    - ./DB_DATA/redis:/data
+    image: redis
+
+  mysql:
+    hostname: db
+    image: 'mysql:8.0'
+    volumes:
+    - ./DB_DATA/mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 'toor'
+      MYSQL_DATABASE: 'relas'
+      MYSQL_USER: 'relasuser'
+      MYSQL_PASSWORD: 'relaspass'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'

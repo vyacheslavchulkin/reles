@@ -1,0 +1,16 @@
+FROM spaceonfire/nginx-php-fpm:latest
+
+RUN apk --no-cache add curl git libzip-dev unzip libedit-dev
+
+WORKDIR /var/www/html
+
+RUN docker-php-ext-install sockets zip pcntl posix readline pdo_mysql
+
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/bin --filename=composer --quiet
+
+COPY . /var/www/html/
+
+RUN sed -i 's#/var/www/html#/var/www/html/public#g' /etc/nginx/sites-enabled/default.conf
+
+RUN cd /var/www/html && composer install \
+    && rm -rf /root/.composer/cache
