@@ -1,7 +1,7 @@
 FROM rabbitmq
 
-ENV RABBITMQ_USER rabbituser
-ENV RABBITMQ_PASSWORD rabbitpass
+ENV RABBITMQ_USER ${RABBITMQ_USER}
+ENV RABBITMQ_PASSWORD ${RABBITMQ_USER}
 ENV RABBITMQ_PID_FILE /var/lib/rabbitmq/mnesia/rabbitmq
 
 ADD rabbit-init.sh /rabbit-init.sh
