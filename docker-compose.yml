@@ -40,10 +40,9 @@ services:
     volumes:
     - ./DB_DATA/mysql:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: 'toor'
-      MYSQL_DATABASE: 'relas'
-      MYSQL_USER: 'relasuser'
-      MYSQL_PASSWORD: 'relaspass'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
       MYSQL_ALLOW_EMPTY_PASSWORD: 'yes'
     networks:
       - app-network
