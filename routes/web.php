@@ -16,3 +16,12 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get("/hello", function () {
+    return "<h1>Hello, world!</h1>";
+});
+
+
+Route::post('/' . env('TELEGRAM_BOT_TOKEN') . '/webhook', function () {
+    $update = Telegram::commandsHandler(true);
+});
