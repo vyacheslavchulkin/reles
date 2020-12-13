@@ -2,7 +2,7 @@ FROM php:7.4-fpm
 
 WORKDIR /var/www/html
 RUN apt-get update \
-    && apt-get install -y librabbitmq-dev libssh-dev npm git\
+    && apt-get install -y librabbitmq-dev libssh-dev npm git zip unzip\
     && docker-php-ext-install bcmath sockets mysqli pdo_mysql \
     && pecl install amqp \
     && docker-php-ext-enable amqp \
