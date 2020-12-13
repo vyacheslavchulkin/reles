@@ -22,6 +22,6 @@ Route::get("/hello", function () {
 });
 
 
-Route::post('/' . env('TELEGRAM_BOT_TOKEN') . '/webhook', function () {
-    $update = Telegram::commandsHandler(true);
-});
+//Route::post('/' . env('TELEGRAM_BOT_TOKEN') . '/webhook', function () {
+//    $update = Telegram::commandsHandler(true);
+//});
