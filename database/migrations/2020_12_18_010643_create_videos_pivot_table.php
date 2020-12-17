@@ -9,8 +9,14 @@ class CreateVideosPivotTable extends Migration
     public function up(): void
     {
         Schema::create('videos_pivot', function (Blueprint $table) {
-            $table->foreignId('video_id');
+            $table->unsignedBigInteger('video_id');
             $table->morphs('object');
+
+            $table->foreign('video_id')
+                  ->references('id')
+                  ->on('videos')
+                  ->cascadeOnUpdate()
+                  ->cascadeOnDelete();
         });
     }
 

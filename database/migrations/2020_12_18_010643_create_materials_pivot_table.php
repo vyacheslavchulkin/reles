@@ -9,8 +9,14 @@ class CreateMaterialsPivotTable extends Migration
     public function up(): void
     {
         Schema::create('materials_pivot', function (Blueprint $table) {
-            $table->foreignId('material_id');
+            $table->unsignedBigInteger('material_id');
             $table->morphs('object');
+
+            $table->foreign('material_id')
+                  ->references('id')
+                  ->on('materials')
+                  ->cascadeOnUpdate()
+                  ->cascadeOnDelete();
         });
     }
 
