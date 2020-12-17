@@ -5,23 +5,24 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Material extends Model
 {
     use HasFactory;
-
-    public function lesson(): BelongsTo
-    {
-        return $this->belongsTo(Lesson::class);
-    }
 
     public function teacher(): BelongsTo
     {
         return $this->belongsTo(User::class, 'teacher_id', 'id');
     }
 
-    public function subject(): BelongsTo
+    public function subjects(): MorphToMany
     {
-        return $this->belongsTo(Subject::class);
+        return $this->morphedByMany(Subject::class, 'taggable');
+    }
+
+    public function lessons(): MorphToMany
+    {
+        return $this->morphedByMany(Lesson::class, 'taggable');
     }
 }

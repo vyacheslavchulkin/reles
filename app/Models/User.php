@@ -41,8 +41,18 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function scopeTeachers(Builder $builder): Builder
+    public function scopeAdmins(Builder $builder): Builder
     {
         return $builder->where('user_type', 1);
+    }
+
+    public function scopeTeachers(Builder $builder): Builder
+    {
+        return $builder->where('user_type', 2);
+    }
+
+    public function scopePupils(Builder $builder): Builder
+    {
+        return $builder->where('user_type', 3);
     }
 }
