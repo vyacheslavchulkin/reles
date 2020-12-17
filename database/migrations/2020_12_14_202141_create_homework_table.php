@@ -19,11 +19,6 @@ class CreateHomeworkTable extends Migration
             $table->date('starts_at')->comment('Дата постановки задания');
             $table->date('finishes_at')->comment('Крайняя сдача домашки');
             $table->dateTime('sent_at')->comment('Когда ученик сдал домашку');
-            /**
-             * Для прикрепления файлов есть отличный пакет https://github.com/spatie/laravel-medialibrary
-             * Очень рекомендую использовать его в проекте
-             */
-            //$table->string('file_path')->nullable()->comment('');
             $table->text('message')->comment('');
             $table->text('description')->comment('');
             $table->string('theme')->comment('');

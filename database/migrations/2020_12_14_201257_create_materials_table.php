@@ -11,16 +11,9 @@ class CreateMaterialsTable extends Migration
         Schema::create('materials', function (Blueprint $table) {
             $table->id()->comment('');
 
-            //$table->unsignedBigInteger('subject_id')->comment('');
-            //$table->unsignedBigInteger('lesson_id')->comment('');
             $table->unsignedBigInteger('teacher_id')->comment('');
             $table->string('name')->comment('');
             $table->text('description')->comment('');
-            /**
-             * Для прикрепления файлов есть отличный пакет https://github.com/spatie/laravel-medialibrary
-             * Очень рекомендую использовать его в проекте
-             */
-            $table->string('file_path')->nullable()->comment('');
 
             $table->timestamps();
         });

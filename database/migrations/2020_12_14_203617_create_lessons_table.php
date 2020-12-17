@@ -20,11 +20,7 @@ class CreateLessonsTable extends Migration
             $table->unsignedBigInteger('teacher_id')->comment('');
             $table->string('theme')->comment('');
             $table->text('description')->comment('');
-            //$table->unsignedBigInteger('material_id')->comment('');
-            /**
-             * Для прикрепления файлов есть отличный пакет https://github.com/spatie/laravel-medialibrary
-             * Очень рекомендую использовать его в проекте
-             */
+
             //$table->string('video_link')->comment('');
             //$table->string('video_password')->comment('');
             $table->date('starts_at')->comment('Дата постановки задания');

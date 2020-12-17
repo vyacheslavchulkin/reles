@@ -17,9 +17,6 @@ class CreateGradesTable extends Migration
             $table->id();
 
             $table->unsignedBigInteger('teacher_id')->comment('');
-            /**
-             * Подумал, что будет уместно иметь название класса: 1Б, 7А или 9В
-             */
             $table->string('name')->comment('Название класса');
 
             $table->timestamps();
