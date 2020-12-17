@@ -1,5 +1,3 @@
-@include('layouts.top_menu')
-@include('layouts.footer')
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
@@ -13,14 +11,16 @@
 
     <!-- Styles -->
     <link href="/css/app.css" rel="stylesheet">
-
+    @yield('head')
     <style>
         body {
             font-family: 'Nunito';
         }
+        @yield('styles')
     </style>
 </head>
 <body>
+@include('layouts.main.top_menu')
 @yield('topMenu')
 <main>
     <div class="container">
@@ -28,7 +28,9 @@
     </div>
 </main>
 <footer>
+    @include('layouts.main.footer')
     @yield('footer')
 </footer>
+@yield('scripts')
 </body>
 </html>
