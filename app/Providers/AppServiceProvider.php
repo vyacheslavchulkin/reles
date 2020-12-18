@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use Faker\Factory;
+use Faker\Generator;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -13,7 +16,12 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->singleton(Generator::class, function (Application $app) {
+            $faker = Factory::create('ru_RU');
+            $faker->seed(1_000);
+
+            return $faker;
+        });
     }
 
     /**
