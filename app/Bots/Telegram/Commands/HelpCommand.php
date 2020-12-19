@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Telegram\Commands;
+namespace App\Bots\Telegram\Commands;
 
 use Telegram\Bot\Commands\Command;
 
@@ -34,9 +34,8 @@ class HelpCommand extends Command
         $text = '';
         foreach ($commands as $name => $handler) {
             /* @var Command $handler */
-            $text .= sprintf('/%s - %s'.PHP_EOL, $name, $handler->getDescription());
+            $text .= sprintf('/%s - %s' . PHP_EOL, $name, $handler->getDescription());
         }
-
         $this->replyWithMessage(compact('text'));
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TelegramController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SiteController;
 
@@ -21,6 +22,8 @@ Route::get("/hello", function () {
 });
 
 
-//Route::post('/' . env('TELEGRAM_BOT_TOKEN') . '/webhook', function () {
-//    $update = Telegram::commandsHandler(true);
-//});
+// Telegram bot
+Route::post('/' . env('TELEGRAM_BOT_TOKEN') . '/webhook', [TelegramController::class, "webhook"])
+    ->name("telegram.api.webhook");
+
+Route::get('/telegram/setWebhook', [TelegramController::class, "setWebhook"]); // TODO открыть доступ только админу, переделать на пост под API
