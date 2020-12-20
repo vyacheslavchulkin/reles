@@ -4,20 +4,20 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateGradesTable extends Migration
+class CreateVideosTable extends Migration
 {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('grades', function (Blueprint $table) {
+        Schema::create('videos', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('teacher_id')->comment('');
-            $table->string('name')->comment('Название класса');
+            $table->string('link', 1024);
+            $table->string('password', 1024);
 
             $table->timestamps();
         });
@@ -28,8 +28,8 @@ class CreateGradesTable extends Migration
      *
      * @return void
      */
-    public function down()
+    public function down(): void
     {
-        Schema::dropIfExists('grades');
+        Schema::dropIfExists('videos');
     }
 }

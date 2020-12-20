@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Homework;
 use Illuminate\Database\Seeder;
 
 class HomeworkSeeder extends Seeder
@@ -13,6 +14,6 @@ class HomeworkSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Homework::factory()->count(10)->create();
     }
 }

@@ -50,8 +50,6 @@ class UserFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                //'subject_id' => 1,
-                //'lesson_id' => 1,
                 'user_type' => 2,
             ];
         });

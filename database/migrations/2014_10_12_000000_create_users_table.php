@@ -14,26 +14,14 @@ class CreateUsersTable extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('subject_id')->nullable()->comment('');
-            $table->unsignedBigInteger('lesson_id')->nullable()->comment('');
-            /**
-             * Добавил поле, отвечающее за тип пользователя, можно сделать отдельную таблицу для хранения типов или сделать enum
-             */
             $table->unsignedSmallInteger('user_type')->comment('');
-            /**
-             * Для прикрепления файлов есть отличный пакет https://github.com/spatie/laravel-medialibrary
-             * Очень рекомендую использовать его в проекте
-             */
-            $table->string('photo_path')->nullable()->comment('');
             $table->string('phone')->comment('');
 
             $table->string('name');
             $table->string('surname');
             $table->string('patronymic');
             $table->text('description');
-            /**
-             * Используйте вместо поля login email пользователя при авторизации
-             */
+
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');

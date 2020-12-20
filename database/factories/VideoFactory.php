@@ -2,18 +2,17 @@
 
 namespace Database\Factories;
 
-use App\Models\Material;
-use App\Models\User;
+use App\Models\Video;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
-class MaterialFactory extends Factory
+class VideoFactory extends Factory
 {
     /**
      * The name of the factory's corresponding model.
      *
      * @var string
      */
-    protected $model = Material::class;
+    protected $model = Video::class;
 
     /**
      * Define the model's default state.
@@ -23,9 +22,8 @@ class MaterialFactory extends Factory
     public function definition()
     {
         return [
-            'teacher_id'  => User::teachers()->inRandomOrder()->take(1)->first(),
-            'name'        => $this->faker->sentence(5, true),
-            'description' => $this->faker->sentence,
+            'link'     => $this->faker->url,
+            'password' => $this->faker->password,
         ];
     }
 }
