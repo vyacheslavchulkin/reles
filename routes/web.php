@@ -23,7 +23,4 @@ Route::get("/hello", function () {
 
 
 // Telegram bot
-Route::post('/' . env('TELEGRAM_BOT_TOKEN') . '/webhook', [TelegramController::class, "webhook"])
-    ->name("telegram.api.webhook");
-
-Route::get('/telegram/setWebhook', [TelegramController::class, "setWebhook"]); // TODO открыть доступ только админу, переделать на пост под API
+Route::post('/' . config('telegram.bots.mybot.token') . '/webhook', [TelegramController::class, "webhook"]);

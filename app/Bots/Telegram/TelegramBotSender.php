@@ -26,26 +26,23 @@ class TelegramBotSender implements BotSenderInterface
     }
 
 
+    /**
+     * @throws TelegramSDKException
+     */
     public function typing(): void
     {
-        try {
-            $this->api->sendChatAction([
-                "chat_id" => $this->chatId,
-                "action" => "typing"
-            ]);
-        } catch (TelegramSDKException $e) {
-
-        }
+        $this->api->sendChatAction(["chat_id" => $this->chatId, "action" => "typing"]);
     }
 
 
-    public function sendText(string $text = ""): int
+    /**
+     * @param string $text
+     * @return int
+     * @throws TelegramSDKException
+     */
+    public function reply(string $text = ""): int
     {
-        try {
-            $message = $this->api->sendMessage(['chat_id' => $this->chatId, 'text' => $text]);
-            return $message->messageId;
-        } catch (TelegramSDKException $e) {
-            return -1;
-        }
+        $message = $this->api->sendMessage(['chat_id' => $this->chatId, 'text' => $text]);
+        return $message->messageId;
     }
 }
