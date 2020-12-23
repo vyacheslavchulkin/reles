@@ -21,7 +21,7 @@ class TelegramBotSender implements BotSenderInterface
      */
     public function __construct(int $chatId, ?Api $api = null)
     {
-        $this->api = ($api == null) ? new Api() : $api;
+        $this->api = $api ?? new Api();
         $this->chatId = $chatId;
     }
 

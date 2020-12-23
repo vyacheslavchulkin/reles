@@ -17,6 +17,8 @@ class StartCommand extends Command
         foreach ($commands as $name => $handler) {
             $text .= sprintf('/%s - %s' . PHP_EOL, $name, $handler->getDescription());
         }
-        $this->replyWithMessage(compact('text'));
+        $this->replyWithMessage([
+            'text' => $text
+        ]);
     }
 }
