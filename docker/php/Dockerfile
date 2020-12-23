@@ -6,6 +6,7 @@ RUN apt-get update \
     && docker-php-ext-install bcmath sockets mysqli pdo_mysql \
     && pecl install amqp \
     && docker-php-ext-enable amqp \
+    && docker-php-ext-install exif \
     && curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 #    && addgroup -gid 101 -group nginx \
 #    && adduser  --gid 101 --disabled-password  nginx
