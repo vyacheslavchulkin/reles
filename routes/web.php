@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TelegramController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SiteController;
@@ -15,6 +16,5 @@ Route::get("/hello", function () {
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
-//Route::post('/' . env('TELEGRAM_BOT_TOKEN') . '/webhook', function () {
-//    $update = Telegram::commandsHandler(true);
-//});
+// Telegram bot
+Route::post('/' . config('telegram.bots.mybot.token') . '/webhook', [TelegramController::class, "webhook"]);
