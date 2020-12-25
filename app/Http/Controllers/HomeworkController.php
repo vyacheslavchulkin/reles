@@ -14,7 +14,7 @@ class HomeworkController extends Controller
      */
     public function index()
     {
-        //
+        return view('homework.teacher.index');
     }
 
     /**
