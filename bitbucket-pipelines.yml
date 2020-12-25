@@ -7,3 +7,8 @@ pipelines:
           deployment: staging
           script:
           - cat ./deploy.sh | ssh -T $HOST
+  branches:
+    master:
+      - step:
+          script:
+            - cat ./deploy.sh | ssh -T $HOST
