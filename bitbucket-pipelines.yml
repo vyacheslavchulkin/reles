@@ -1,0 +1,9 @@
+image: atlassian/default-image:latest
+
+pipelines:
+  custom:
+    staging:
+      - step:
+          deployment: staging
+          script:
+          - cat ./deploy.sh | ssh -T $HOST
