@@ -2,8 +2,11 @@
 
 namespace App\Providers;
 
+use App\Models\Lesson;
+use App\Models\Subject;
 use Faker\Factory;
 use Faker\Generator;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\ServiceProvider;
 
@@ -31,6 +34,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Relation::morphMap([
+            'subject' => Subject::class,
+            'lesson' => Lesson::class,
+        ]);
     }
 }

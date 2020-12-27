@@ -24,11 +24,10 @@ class UserFactory extends Factory
     {
         return [
             'phone'             => $this->faker->phoneNumber,
-            //'photo_path'        => $this->faker->image(storage_path('avatars')),
             'user_type'         => $this->faker->randomElement([1, 2, 3]),
-            'name'              => $this->faker->firstName,
-            'surname'           => $this->faker->lastName,
-            'patronymic'        => $this->faker->middleName,
+            'first_name'        => $this->faker->firstName,
+            'last_name'         => $this->faker->lastName,
+            'middle_name'       => $this->faker->middleName,
             'description'       => $this->faker->sentence(3),
             'email'             => $this->faker->unique()->safeEmail,
             'email_verified_at' => now(),
@@ -50,8 +49,6 @@ class UserFactory extends Factory
     {
         return $this->state(function (array $attributes) {
             return [
-                //'subject_id' => 1,
-                //'lesson_id' => 1,
                 'user_type' => 2,
             ];
         });

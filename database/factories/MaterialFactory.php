@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Material;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MaterialFactory extends Factory
@@ -22,7 +23,9 @@ class MaterialFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'teacher_id'  => User::teachers()->inRandomOrder()->take(1)->first(),
+            'name'        => $this->faker->sentence(5, true),
+            'description' => $this->faker->sentence,
         ];
     }
 }
