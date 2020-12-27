@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -50,17 +51,17 @@ class User extends Authenticatable implements HasMedia
 
     public function scopeAdmins(Builder $builder): Builder
     {
-        return $builder->where('user_type', 1);
+        return $builder->where('user_type', RoleEnum::ADMIN);
     }
 
     public function scopeTeachers(Builder $builder): Builder
     {
-        return $builder->where('user_type', 2);
+        return $builder->where('user_type', RoleEnum::TEACHER);
     }
 
     public function scopePupils(Builder $builder): Builder
     {
-        return $builder->where('user_type', 3);
+        return $builder->where('user_type', RoleEnum::PUPIL);
     }
 
     public function registerMediaCollections(): void
