@@ -9,8 +9,6 @@ Auth::routes();
 
 Route::get('/', [SiteController::class, 'index']);
 
-Route::post('/homework', [\App\Http\Controllers\HomeworkController::class, 'create']);
-
 Route::get("/hello", function () {
     return "<h1>Hello, world!</h1>";
 });
