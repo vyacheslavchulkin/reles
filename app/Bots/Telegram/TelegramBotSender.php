@@ -37,12 +37,21 @@ class TelegramBotSender implements BotSenderInterface
 
     /**
      * @param string $text
+     * @param int|null $messageId
      * @return int
      * @throws TelegramSDKException
      */
-    public function reply(string $text = ""): int
+    public function reply(string $text = "", ?int $messageId = null): int
     {
-        $message = $this->api->sendMessage(['chat_id' => $this->chatId, 'text' => $text]);
+        $params = [];
+        $params["chat_id"] = $this->chatId;
+        $params["text"] = $text;
+        if ($messageId) {
+            $params["message_id"] = $messageId;
+            $message = $this->api->editMessageText($params);
+        } else {
+            $message = $this->api->sendMessage($params);
+        }
         return $message->messageId;
     }
 }

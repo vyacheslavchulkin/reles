@@ -7,6 +7,7 @@ namespace App\Bots\Telegram;
 use App\Bots\Interfaces\BotInterface;
 use Illuminate\Support\Collection;
 use Telegram\Bot\Api;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 use Telegram\Bot\Objects\Update;
 
 class TelegramBot implements BotInterface
@@ -20,11 +21,12 @@ class TelegramBot implements BotInterface
 
     /**
      * TelegramBot constructor.
+     * @throws TelegramSDKException
      */
     public function __construct()
     {
         $this->api = new Api();
-        $this->update = $this->api->commandsHandler(true);
+        $this->update = $this->api->getWebhookUpdate();
         $this->message = $this->update->getMessage();
         $this->chatId = (int)$this->message->chat->id;
         $this->messageText = trim($this->message->text);
@@ -35,17 +37,23 @@ class TelegramBot implements BotInterface
 
     /**
      *
+     * @throws TelegramSDKException
      */
     public function run(): void
     {
         $this->sender->typing();
+        $dialog = new TelegramBotDialog($this->update, $this->api);
 
         if ($this->isCommand()) {
             $this->api->processCommand($this->update);
+            $dialog->cleanDialogCondition();
         } elseif ($this->checkCallBackData()) {
-            $this->sender->reply($this->update->callbackQuery->data); // TODO Заглушка нажата кнопка
+            $dialog->newDialog();
+        } elseif ($dialog->checkDialogCondition()) {
+            $dialog->dialog();
         } else {
-            $this->sender->reply($this->messageText); // TODO заглушка отправлено сообщение в чат
+            $this->api->triggerCommand('start', $this->update);
+            $dialog->cleanDialogCondition();
         }
     }
 
@@ -63,6 +71,8 @@ class TelegramBot implements BotInterface
 
     private function checkCallBackData(): bool
     {
-        return !empty($this->update->callbackQuery); // TODO Криво работает
+        return ($this->update->detectType() == "callback_query");
     }
+
+
 }
