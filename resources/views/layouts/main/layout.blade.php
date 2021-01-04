@@ -20,17 +20,19 @@
     </style>
 </head>
 <body>
-@include('layouts.main.top_menu')
-@yield('topMenu')
 <main>
     <div class="container">
+{{--тут сделать логику опеределения шапки--}}
+@include('layouts.main.header_auth')
+@yield('topMenu')
+
     @yield('content')
-    </div>
-</main>
 <footer>
     @include('layouts.main.footer')
     @yield('footer')
 </footer>
-@yield('scripts')
+    </div>
+</main>
+@stack('scripts')
 </body>
 </html>

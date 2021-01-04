@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\TelegramController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -15,6 +16,11 @@ Route::get("/hello", function () {
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+
+//Teacher
+Route::get('/teacher/lessons', [LessonController::class, 'index']);
+Route::get('/teacher/create-lesson', [LessonController::class, 'create']);
+Route::get('/teacher/delete-lesson/{id}', [LessonController::class, 'delete']);
 
 // Telegram bot
 Route::post('/' . config('telegram.bots.mybot.token') . '/webhook', [TelegramController::class, "webhook"]);
