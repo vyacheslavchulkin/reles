@@ -4,10 +4,13 @@
 namespace App\Bots\Telegram\Commands;
 
 
+use App\Bots\Telegram\Traits\TelegramBotHomeworkDialog;
 use Telegram\Bot\Commands\Command;
 
 class HomeworkCommand extends Command
 {
+    use TelegramBotHomeworkDialog;
+
     protected $name = 'hw';
     protected $description = 'Сдать домашнее задание';
 
@@ -36,16 +39,5 @@ class HomeworkCommand extends Command
     private function isRegistered(): bool
     {
         return true; // TODO заглушка для проверки авторизаци
-    }
-
-
-    private function getHomeworkList(): array
-    {
-        return [
-            1111 => "Физика. Измерить длину экватора.",
-            2222 => "Летиратура. Выучит наизусь паэму 'Руслан и Людмила'.",
-            3333 => "Математика. Расичтать факториал 1000000.",
-            4444 => "Биология. Выучить названия костей человека.",
-        ]; // TODO: Заглушка для списка заданий
     }
 }

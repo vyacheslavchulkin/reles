@@ -48,7 +48,7 @@ class TelegramBot implements BotInterface
             $this->api->processCommand($this->update);
             $dialog->cleanDialogCondition();
         } elseif ($this->checkCallBackData()) {
-            $dialog->newDialog();
+            $dialog->dialog(true);
         } elseif ($dialog->checkDialogCondition()) {
             $dialog->dialog();
         } else {
