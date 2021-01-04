@@ -16,7 +16,7 @@ class TelegramController
             $bot = new TelegramBot();
             $bot->run();
         } catch (Exception $e) {
-            Log::error($e->getMessage());
+            Log::error($e);
         }
     }
 }

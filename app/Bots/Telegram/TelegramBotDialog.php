@@ -4,6 +4,7 @@
 namespace App\Bots\Telegram;
 
 
+use App\Bots\Telegram\Traits\TelegramBotBase;
 use App\Bots\Telegram\Traits\TelegramBotHomeworkDialog;
 use App\Bots\Telegram\Traits\TelegramBotRedis;
 use Illuminate\Support\Facades\Redis;
@@ -16,6 +17,7 @@ class TelegramBotDialog
 {
     use Answerable;
     use TelegramBotHomeworkDialog;
+    use TelegramBotBase;
     use TelegramBotRedis;
     use Telegram;
 
@@ -51,6 +53,11 @@ class TelegramBotDialog
 
             case "hw":
                 $this->homeworkDialog($dialogCondition, $newDialog);
+                break;
+
+            case "cmd":
+                $this->telegram->triggerCommand($dialogCondition["id"], $this->update);
+                $this->cleanDialogCondition();
                 break;
 
             default:

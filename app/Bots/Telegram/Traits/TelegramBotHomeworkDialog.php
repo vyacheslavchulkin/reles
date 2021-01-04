@@ -8,10 +8,14 @@ trait TelegramBotHomeworkDialog
 {
     protected function homeworkDialog(array  $dialogCondition, bool $newDialog = false): void
     {
-        if ($newDialog){
-            $this->startHomeworkDialog($dialogCondition);
+        if($this->isRegistered()) {
+            if ($newDialog) {
+                $this->startHomeworkDialog($dialogCondition);
+            } else {
+                $this->resumeHomeworkDialog($dialogCondition);
+            }
         } else {
-            $this->resumeHomeworkDialog($dialogCondition);
+            $this->replyRegError();
         }
     }
 
@@ -19,12 +23,9 @@ trait TelegramBotHomeworkDialog
     private function startHomeworkDialog(array $dialogCondition): void
     {
         $homeworkList = $this->getHomeworkList();
-        $message = "Отправте домашнее задание `" . $homeworkList[$dialogCondition["id"]] . "` на проверку.";
-        $this->telegram->editMessageText([
-            "text" => $message,
-            "message_id" => $this->messageId,
-            "chat_id" => $this->chatId,
-        ]);
+        $text = "Отправте домашнее задание `" . $homeworkList[$dialogCondition["id"]] . "` на проверку.";
+        $buttons = [[['text' => "⏪ Список домашних заданий", "callback_data" => "cmd_hw"]]];
+        $this->replyWithKeyboard($text, $buttons, true);
     }
 
 

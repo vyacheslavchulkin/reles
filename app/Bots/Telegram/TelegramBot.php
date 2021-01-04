@@ -5,6 +5,7 @@ namespace App\Bots\Telegram;
 
 
 use App\Bots\Interfaces\BotInterface;
+use App\Bots\Telegram\Traits\TelegramBotBase;
 use Illuminate\Support\Collection;
 use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
@@ -12,6 +13,8 @@ use Telegram\Bot\Objects\Update;
 
 class TelegramBot implements BotInterface
 {
+    use TelegramBotBase;
+
     private Api $api;
     private Collection $message;
     private TelegramBotSender $sender;
