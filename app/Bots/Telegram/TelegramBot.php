@@ -7,20 +7,19 @@ namespace App\Bots\Telegram;
 use App\Bots\Interfaces\BotInterface;
 use App\Bots\Telegram\Traits\TelegramBotBase;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Redis;
 use Telegram\Bot\Api;
 use Telegram\Bot\Exceptions\TelegramSDKException;
-use Telegram\Bot\Objects\Update;
 
 class TelegramBot implements BotInterface
 {
     use TelegramBotBase;
 
-    private Api $api;
     private Collection $message;
-    private TelegramBotSender $sender;
-    private Update $update;
     private int $chatId;
     private string $messageText;
+    private int $messageId;
+    private array $dialogCondition;
 
     /**
      * TelegramBot constructor.
@@ -28,13 +27,14 @@ class TelegramBot implements BotInterface
      */
     public function __construct()
     {
-        $this->api = new Api();
-        $this->update = $this->api->getWebhookUpdate();
+        $this->telegram = new Api();
+        $this->update = $this->telegram->getWebhookUpdate();
         $this->message = $this->update->getMessage();
         $this->chatId = (int)$this->message->chat->id;
         $this->messageText = trim($this->message->text);
-        $this->sender = new TelegramBotSender($this->chatId);
-        $this->api->addCommands(config("telegram.commands"));
+        $this->messageId = (int)$this->message->messageId;
+        $this->telegram->addCommands(config("telegram.commands"));
+        $this->redis = $redis = Redis::connection();
     }
 
 
@@ -44,38 +44,46 @@ class TelegramBot implements BotInterface
      */
     public function run(): void
     {
-        $this->sender->typing();
-        $dialog = new TelegramBotDialog($this->update, $this->api);
+        $this->typing();
 
         if ($this->isCommand()) {
-            $this->api->processCommand($this->update);
-            $dialog->cleanDialogCondition();
+            $this->telegram->processCommand($this->update);
+            $this->cleanDialogCondition();
         } elseif ($this->checkCallBackData()) {
-            $dialog->dialog(true);
-        } elseif ($dialog->checkDialogCondition()) {
-            $dialog->dialog();
+            $this->dialog(true);
+        } elseif ($this->checkDialogCondition()) {
+            $this->dialog();
         } else {
-            $this->api->triggerCommand('start', $this->update);
-            $dialog->cleanDialogCondition();
+            $this->telegram->triggerCommand('start', $this->update);
+            $this->cleanDialogCondition();
         }
     }
 
 
-    private function isCommand(): bool
+
+    private function dialog(bool $newDialog = false): void
     {
-        $text = $this->messageText;
-        if (substr($text, 0, 1) == "/") {
-            $command = explode(" ", substr($text, 1))[0];
-            return array_key_exists(trim($command), $this->api->getCommands());
+        if ($newDialog) {
+            $dialogCondition = $this->callbackQueryParser();
+            $this->setDialogCondition($dialogCondition);
+        } else {
+            $dialogCondition = $this->getDialogCondition();
         }
-        return false;
+
+        switch ($dialogCondition["type"]) {
+
+            case "hw":
+                $this->homeworkDialog($dialogCondition, $newDialog);
+                break;
+
+            case "cmd":
+                $this->telegram->triggerCommand($dialogCondition["id"], $this->update);
+                $this->cleanDialogCondition();
+                break;
+
+            default:
+                $this->cleanDialogCondition();
+        }
     }
-
-
-    private function checkCallBackData(): bool
-    {
-        return ($this->update->detectType() == "callback_query");
-    }
-
 
 }

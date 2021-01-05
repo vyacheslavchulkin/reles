@@ -33,9 +33,10 @@ trait TelegramBotHomeworkDialog
     {
         // TODO убрать в отдельный класс
         $homeworkList = $this->getHomeworkList();
-        $message = "Домашнее задание `" . $homeworkList[$dialogCondition["id"]] . "` отправлено на проверку.";
+        $message = "Домашнее задание <strong>{$homeworkList[$dialogCondition["id"]]}</strong> отправлено на проверку.";
         $this->replyWithMessage([
             'text' => $message,
+            "parse_mode" => "html",
         ]); // TODO Заглушка задание отправлено
         $this->cleanDialogCondition();
     }
@@ -43,7 +44,6 @@ trait TelegramBotHomeworkDialog
 
     private function getHomeworkList(): array
     {
-        // TODO Убрать в отдельный класс
         return [
             1111 => "Физика. Измерить длину экватора.",
             2222 => "Летиратура. Выучит наизусь паэму 'Руслан и Людмила'.",

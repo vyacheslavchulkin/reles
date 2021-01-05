@@ -6,6 +6,7 @@ namespace App\Bots\Telegram\Commands;
 
 use App\Bots\Telegram\Traits\TelegramBotBase;
 use Telegram\Bot\Commands\Command;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 class ScheduleCommand extends Command
 {
@@ -14,6 +15,10 @@ class ScheduleCommand extends Command
     protected $name = "sch";
     protected $description = "Расписание уроков";
 
+
+    /**
+     * @throws TelegramSDKException
+     */
     public function handle()
     {
         if ($this->isRegistered()) {

@@ -4,47 +4,51 @@
 namespace App\Bots\Telegram\Traits;
 
 
+use Telegram\Bot\Answers\Answerable;
+use Telegram\Bot\Traits\Telegram;
+
 trait TelegramBotBase
 {
+    use Answerable;
+    use TelegramBotHomeworkDialog;
+    use TelegramBotRedis;
+    use TelegramBotReply;
+    use Telegram;
+
+
+    /**
+     * @return bool
+     */
     private function checkCallBackData(): bool
     {
         return ($this->update->detectType() == "callback_query");
     }
 
 
-    private function replyWithKeyboard(string $text, array $buttons, bool $enableHomeButton = false): void
-    {
-        if ($enableHomeButton) {
-            $buttons[] = [['text' => "⏪ В начало", "callback_data" => "cmd_start"]];
-        }
-
-        $keyboard = ['inline_keyboard' => $buttons];
-        if ($this->checkCallBackData()) {
-            $this->telegram->editMessageText([
-                "text" => $text,
-                "message_id" => $this->update->callbackQuery->message->messageId,
-                "chat_id" => $this->update->callbackQuery->message->chat->id,
-                "reply_markup" => json_encode($keyboard),
-            ]);
-        } else {
-            $this->replyWithMessage([
-                'text' => $text,
-                "reply_markup" => json_encode($keyboard)
-            ]);
-        }
-    }
-
-
-    private function replyRegError(): void
-    {
-        $buttons = [[['text' => "Регистрация", "callback_data" => "cmd_reg"]]];
-        $text = "Ошибка!\nВы должны зарегистрироваться";
-        $this->replyWithKeyboard($text, $buttons, true);
-    }
-
-
     private function isRegistered(): bool
     {
         return true; // TODO заглушка для проверки авторизаци
+    }
+
+
+    private function callbackQueryParser(): array
+    {
+        $query = (string)$this->update->callbackQuery->data;
+        $explode = explode("_", $query);
+        return [
+            "type" => $explode[0],
+            "id" => (string)$explode[1],
+        ];
+    }
+
+
+    private function isCommand(): bool
+    {
+        $text = $this->messageText;
+        if (substr($text, 0, 1) == "/") {
+            $command = explode(" ", substr($text, 1))[0];
+            return array_key_exists(trim($command), $this->telegram->getCommands());
+        }
+        return false;
     }
 }
