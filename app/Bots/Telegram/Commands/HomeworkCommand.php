@@ -4,18 +4,21 @@
 namespace App\Bots\Telegram\Commands;
 
 
-use App\Bots\Telegram\Traits\TelegramBotBase;
-use App\Bots\Telegram\Traits\TelegramBotHomeworkDialog;
+use App\Bots\Telegram\Traits\TelegramBotHomework;
 use Telegram\Bot\Commands\Command;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 class HomeworkCommand extends Command
 {
-    use TelegramBotHomeworkDialog;
-    use TelegramBotBase;
+    use TelegramBotHomework;
 
     protected $name = 'hw';
     protected $description = 'Сдать домашнее задание';
 
+
+    /**
+     * @throws TelegramSDKException
+     */
     public function handle()
     {
         if ($this->isRegistered()) {

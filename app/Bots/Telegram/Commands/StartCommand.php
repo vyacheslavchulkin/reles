@@ -2,17 +2,25 @@
 
 namespace App\Bots\Telegram\Commands;
 
-use App\Bots\Telegram\Traits\TelegramBotBase;
+use App\Bots\Telegram\Traits\TelegramBotRegistration;
+use App\Bots\Telegram\Traits\TelegramBotReply;
 use Telegram\Bot\Commands\Command;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 
 class StartCommand extends Command
 {
-    use TelegramBotBase;
+    use TelegramBotReply;
+    use TelegramBotRegistration;
+
 
     protected $name = 'start';
     protected $description = 'Запуск бота';
 
+
+    /**
+     * @throws TelegramSDKException
+     */
     public function handle()
     {
         $buttons = [];

@@ -7,8 +7,6 @@ namespace App\Bots\Telegram;
 use App\Bots\Interfaces\BotSenderInterface;
 use App\Bots\Telegram\Traits\TelegramBotReply;
 use Telegram\Bot\Api;
-use Telegram\Bot\Exceptions\TelegramSDKException;
-use Telegram\Bot\Traits\Telegram;
 
 class TelegramBotSender implements BotSenderInterface
 {

@@ -4,16 +4,22 @@
 namespace App\Bots\Telegram\Commands;
 
 
-use App\Bots\Telegram\Traits\TelegramBotBase;
+use App\Bots\Telegram\Traits\TelegramBotReply;
 use Telegram\Bot\Commands\Command;
+use Telegram\Bot\Exceptions\TelegramSDKException;
 
 class RegistrationCommand extends Command
 {
-    use TelegramBotBase;
+    use TelegramBotReply;
+
 
     protected $name = 'reg';
     protected $description = 'Регистрация';
 
+
+    /**
+     * @throws TelegramSDKException
+     */
     public function handle()
     {
         // TODO: Заглушка регистрации

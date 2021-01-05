@@ -4,13 +4,16 @@
 namespace App\Bots\Telegram\Commands;
 
 
-use App\Bots\Telegram\Traits\TelegramBotBase;
+use App\Bots\Telegram\Traits\TelegramBotRegistration;
+use App\Bots\Telegram\Traits\TelegramBotReply;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 class ScheduleCommand extends Command
 {
-    use TelegramBotBase;
+    use TelegramBotReply;
+    use TelegramBotRegistration;
+
 
     protected $name = "sch";
     protected $description = "Расписание уроков";
