@@ -4,11 +4,9 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 
 @section('content')
-
     <div class="heading text-center mb-3">
         <h3>Расписание</h3>
     </div>
-
     <div>
         <form action="/teacher/lessons">
             <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
@@ -35,8 +33,11 @@
                 <button type="submit" class="btn btn-outline-primary" id="confirm">показать</button>
             </div>
         </form>
-    </div>
 
+        <form action="/teacher/create-lesson" method="get" class="text-center">
+            <button type="submit" class="btn btn-outline-success" id="confirm" >создать урок</button>
+        </form>
+    </div>
     <div class="card-deck">
         <div class="card">
             <div class="card-body">
