@@ -20,6 +20,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 //Teacher
 Route::get('/teacher/lessons', [LessonController::class, 'index']);
 Route::get('/teacher/create-lesson', [LessonController::class, 'create']);
+Route::post('/teacher/store-lesson', [LessonController::class, 'store']);
 Route::get('/teacher/delete-lesson/{id}', [LessonController::class, 'delete']);
 
 // Telegram bot

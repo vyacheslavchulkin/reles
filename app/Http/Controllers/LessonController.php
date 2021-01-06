@@ -14,7 +14,7 @@ class LessonController extends Controller
      */
     public function index()
     {
-        //
+        return view('teacher.lesson.index');
     }
 
     /**
@@ -35,7 +35,7 @@ class LessonController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return var_dump($request->post());
     }
 
     /**

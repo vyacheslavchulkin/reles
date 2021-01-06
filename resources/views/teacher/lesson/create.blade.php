@@ -10,7 +10,7 @@
                 <h3>Добавить новый урок</h3>
             </div>
             <div class="lesson ">
-                <form class="form-group" method="post" action="/teacher/lessons">
+                <form class="form-group" method="post" action="/teacher/store-lesson">
                     <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
 
                     <select class="custom-select mb-3" id="subject" name="subject">
