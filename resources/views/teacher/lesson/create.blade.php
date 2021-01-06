@@ -10,7 +10,9 @@
                 <h3>Добавить новый урок</h3>
             </div>
             <div class="lesson ">
-                <form class="form-group">
+                <form class="form-group" method="post" action="/teacher/lessons">
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+
                     <select class="custom-select mb-3" id="subject" name="subject">
                         <option disabled selected>предмет</option>
                         <option value="1">Математика</option>
@@ -43,8 +45,8 @@
                         <input type="file" class="custom-file-input" id="customFile">
                         <label class="custom-file-label" for="customFile">загрузить материалы</label>
                     </div>
-                    <div class="text-center">
-                        <button type="submit mb-3" class="btn btn-outline-primary" id="confirm">отправить</button>
+                    <div class="text-center mb-3">
+                        <button type="submit" class="btn btn-outline-primary" id="confirm">отправить</button>
                     </div>
 
 
