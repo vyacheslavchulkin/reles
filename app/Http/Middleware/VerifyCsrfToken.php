@@ -12,6 +12,7 @@ class VerifyCsrfToken extends Middleware
      * @var array
      */
     protected $except = [
-        "1486860562:*",
+        "1486860562:*", // prod tg bot
+        "1469637560:*", // dev tg bot
     ];
 }
