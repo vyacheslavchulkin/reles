@@ -23,7 +23,7 @@
 <main>
     <div class="container">
 {{--тут сделать логику опеределения шапки--}}
-@include('layouts.main.header_auth')
+@include('layouts.main.header')
 @yield('topMenu')
 
     @yield('content')
