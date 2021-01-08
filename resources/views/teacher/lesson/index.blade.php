@@ -8,8 +8,8 @@
         <h3>Расписание</h3>
     </div>
     <div>
-        <form action="/teacher/lessons">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+        <form action="{{ route('teacher-lesson') }}">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
             <select class="custom-select mb-3" id="subject" name="subject">
                 <option disabled selected>предмет</option>
                 <option value="1">Математика</option>
@@ -34,7 +34,7 @@
             </div>
         </form>
 
-        <form action="/teacher/create-lesson" method="get" class="text-center">
+        <form action="{{ route('teacher-lesson-create') }}" method="get" class="text-center">
             <button type="submit" class="btn btn-outline-success" id="confirm" >создать урок</button>
         </form>
     </div>

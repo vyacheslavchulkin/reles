@@ -4,7 +4,7 @@
         <nav class="my-2 my-md-0 mr-md-3">
             <a class="p-2 text-dark" href="/">Главная</a>
             <a class="p-2 text-dark" href="#">Материалы</a>
-            <a class="p-2 text-dark" href="/teacher/lessons">Расписание</a>
+            <a class="p-2 text-dark" href="{{ route('teacher-lesson') }}">Расписание</a>
             <a class="p-2 text-dark" href="#">Домашние задания</a>
         </nav>
         <a class="btn btn-outline-primary" href="#">Выйти</a>

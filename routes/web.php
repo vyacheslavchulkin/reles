@@ -18,10 +18,10 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 
 //Teacher
-Route::get('/teacher/lessons', [LessonController::class, 'index']);
-Route::get('/teacher/create-lesson', [LessonController::class, 'create']);
-Route::post('/teacher/store-lesson', [LessonController::class, 'store']);
-Route::get('/teacher/delete-lesson/{id}', [LessonController::class, 'delete']);
+Route::get('/teacher/lesson', [LessonController::class, 'index'])->name('teacher-lesson');
+Route::get('/teacher/create-lesson', [LessonController::class, 'create'])->name('teacher-lesson-create');
+Route::post('/teacher/store-lesson', [LessonController::class, 'store'])->name('teacher-lesson-store');
+Route::get('/teacher/delete-lesson/{id}', [LessonController::class, 'delete'])->name('teacher-lesson-delete');
 
 // Telegram bot
 Route::post('/' . config('telegram.bots.mybot.token') . '/webhook', [TelegramController::class, "webhook"]);

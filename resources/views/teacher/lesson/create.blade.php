@@ -10,9 +10,8 @@
                 <h3>Добавить новый урок</h3>
             </div>
             <div class="lesson ">
-                <form class="form-group" method="post" action="/teacher/store-lesson">
-                    <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
-
+                <form class="form-group" method="post" action="{{ route('teacher-lesson-store') }}">
+                    @csrf
                     <select class="custom-select mb-3" id="subject" name="subject">
                         <option disabled selected>предмет</option>
                         <option value="1">Математика</option>
@@ -38,11 +37,13 @@
 
                     <input type="text" class="form-control mb-3" name="theme" placeholder="тема урока">
 
+                    <input type="text" class="form-control mb-3" name="link" placeholder="ссылка на вебинар">
+
                     <textarea class="form-control mb-3" name="description"
                               placeholder="дополнительная информация"></textarea>
 
                     <div class="custom-file mb-3">
-                        <input type="file" class="custom-file-input" id="customFile">
+                        <input type="file" class="custom-file-input" id="customFile" name="file">
                         <label class="custom-file-label" for="customFile">загрузить материалы</label>
                     </div>
                     <div class="text-center mb-3">
