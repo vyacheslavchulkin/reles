@@ -4,13 +4,13 @@
 namespace App\Bots\Telegram\Commands;
 
 
-use App\Bots\Telegram\Traits\TelegramBotReply;
+use App\Bots\Telegram\Traits\TelegramBotBase;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 class RegistrationCommand extends Command
 {
-    use TelegramBotReply;
+    use TelegramBotBase;
 
 
     protected $name = 'reg';

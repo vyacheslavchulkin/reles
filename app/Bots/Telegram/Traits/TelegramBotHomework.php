@@ -23,7 +23,7 @@ trait TelegramBotHomework
     private function startHomeworkDialog(array $dialogCondition): void
     {
         $homeworkList = $this->getHomeworkList();
-        $text = "Отправте домашнее задание `" . $homeworkList[$dialogCondition["id"]] . "` на проверку.";
+        $text = "Отправте домашнее задание <strong>" . $homeworkList[$dialogCondition["id"]] . "</strong> на проверку.";
         $buttons = [[['text' => "⏪ Список домашних заданий", "callback_data" => "cmd_hw"]]];
         $this->replyWithKeyboard($text, $buttons, true);
     }
@@ -33,11 +33,12 @@ trait TelegramBotHomework
     {
         // TODO убрать в отдельный класс
         $homeworkList = $this->getHomeworkList();
-        $message = "Домашнее задание <strong>{$homeworkList[$dialogCondition["id"]]}</strong> отправлено на проверку.";
-        $this->replyWithMessage([
-            'text' => $message,
-            "parse_mode" => "html",
-        ]); // TODO Заглушка задание отправлено
+        $text = "Домашнее задание <strong>{$homeworkList[$dialogCondition["id"]]}</strong> отправлено на проверку.";
+        $buttons = [
+            [['text' => "Отправить еще один файл", "callback_data" => "hw_{$dialogCondition["id"]}"]],
+            [['text' => "⏪ Список домашних заданий", "callback_data" => "cmd_hw"]]
+        ];
+        $this->replyWithKeyboard($text, $buttons, true); // TODO Заглушка задание отправлено
         $this->cleanDialogCondition();
     }
 
@@ -47,7 +48,7 @@ trait TelegramBotHomework
         return [
             1111 => "Физика. Измерить длину экватора.",
             2222 => "Летиратура. Выучит наизусь паэму 'Руслан и Людмила'.",
-            3333 => "Математика. Расичтать факториал 1000000.",
+            3333 => "Математика. Рассчитать факториал 1000000.",
             4444 => "Биология. Выучить названия костей человека.",
         ]; // TODO: Заглушка для списка заданий
     }
