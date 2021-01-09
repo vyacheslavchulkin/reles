@@ -10,7 +10,7 @@ Auth::routes();
 Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 
 
-Route::get('/', [SiteController::class, 'index']);
+Route::get('/', [SiteController::class, 'index'])->name('main');
 
 Route::get("/hello", function () {
     return "<h1>Hello, world!</h1>";

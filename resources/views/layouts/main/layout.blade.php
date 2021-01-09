@@ -22,15 +22,14 @@
 <body>
 <main>
     <div class="container">
-{{--тут сделать логику опеределения шапки--}}
-@include('layouts.main.header')
-@yield('topMenu')
-
-    @yield('content')
-<footer>
-    @include('layouts.main.footer')
-    @yield('footer')
-</footer>
+        @include('layouts.main.header')
+        @yield('topMenu')
+        @include('layouts.main.notice')
+        @yield('content')
+        <footer>
+            @include('layouts.main.footer')
+            @yield('footer')
+        </footer>
     </div>
 </main>
 @stack('scripts')

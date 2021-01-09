@@ -37,24 +37,25 @@
             <button type="submit" class="btn btn-outline-success" id="confirm">создать урок</button>
         </form>
     </div>
-    @php ($i = 1)
-    <div class="card-deck">
-        @foreach($lessons as $lesson)
-            @if($i % 3 === 0)<div class="card-deck">@endif
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $lesson->name }}</h5>
-                            <h6 class="card-subtitle mb-2 text-muted">{{ $lesson->starts_at }}</h6>
-                            <p class="card-text"> {{ $lesson->theme }}</p>
-                            <p class="card-text"> {{ $lesson->description }}</p>
-                            <a href="#" class="btn btn-outline-primary mb-3">изменить</a>
-                            <a href="#" class="btn btn-outline-danger mb-3">удалить</a>
-                        </div>
+    @foreach($lessons as $lesson)
+    @if($loop->index % 3 === 0 && !$loop->first)</div>@endif
+    @if($loop->index % 3 === 0)
+        <div class="row mt-3 justify-content-center">@endif
+            <div class="col col-md-8 col-xl-4 col-lg-2">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $lesson->name }}</h5>
+                        <h6 class="card-subtitle mb-2 text-muted">{{ $lesson->starts_at }}</h6>
+                        <p class="card-text"> {{ $lesson->theme }}</p>
+                        <p class="card-text"> {{ $lesson->description }}</p>
+                        <a href="#" class="btn btn-outline-primary mb-3">изменить</a>
+                        <a href="#" class="btn btn-outline-danger mb-3">удалить</a>
                     </div>
-            @if($i % 3 === 0)</div>@endif
-            @php ($i++)
-        @endforeach
-    </div>
+                </div>
+            </div>
+
+            @if($loop->last)</div>@endif
+    @endforeach
 
 @endsection
 

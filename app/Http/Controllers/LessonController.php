@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LessonRequest;
 use App\Models\Grade;
 use App\Models\Lesson;
 use App\Models\Subject;
@@ -40,11 +41,20 @@ class LessonController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(LessonRequest $request)
     {
-        dd($request->post());
+        $lesson = new Lesson();
+        $lesson->teacher_id = Auth::user()->id;
+        $lesson->subject_id = $request->input('subject');
+        $lesson->theme = $request->input('theme');
+        $lesson->description = $request->input('description');
+        $lesson->starts_at = '2021-01-01 10:10:00';
+        $lesson->finishes_at = '2021-01-01 10:50:00';
+
+        $lesson->save();
+        return redirect()->route('main')->with('success', 'Урок был добавлен!');
     }
 
     /**
