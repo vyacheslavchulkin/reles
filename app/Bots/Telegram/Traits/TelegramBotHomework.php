@@ -6,9 +6,6 @@ namespace App\Bots\Telegram\Traits;
 
 trait TelegramBotHomework
 {
-    use TelegramBotRegistration;
-    use TelegramBotReply;
-
     protected function homeworkDialog(array  $dialogCondition, bool $newDialog = false): void
     {
         if($this->isRegistered()) {
