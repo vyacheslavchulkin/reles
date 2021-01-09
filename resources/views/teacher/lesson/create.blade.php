@@ -14,17 +14,16 @@
                     @csrf
                     <select class="custom-select mb-3" id="subject" name="subject">
                         <option disabled selected>предмет</option>
-                        <option value="1">Математика</option>
-                        <option value="2">Физика</option>
-                        <option value="3">Русский язык</option>
-                        <option value="4">История</option>
+                        @foreach($subjects as $subject)
+                            <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                        @endforeach
                     </select>
 
                     <select class="custom-select mb-3" id="grade" name="grade">
                         <option disabled selected>класс</option>
-                        <option value="1">7a</option>
-                        <option value="2">8d</option>
-                        <option value="3">10a</option>
+                        @foreach($grades as $grade)
+                            <option value="{{ $grade->id }}">{{ $grade->name }}</option>
+                        @endforeach
                     </select>
 
 
@@ -36,8 +35,6 @@
                     </div>
 
                     <input type="text" class="form-control mb-3" name="theme" placeholder="тема урока">
-
-                    <input type="text" class="form-control mb-3" name="link" placeholder="ссылка на вебинар">
 
                     <textarea class="form-control mb-3" name="description"
                               placeholder="дополнительная информация"></textarea>

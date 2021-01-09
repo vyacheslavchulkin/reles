@@ -7,6 +7,8 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SiteController;
 
 Auth::routes();
+Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+
 
 Route::get('/', [SiteController::class, 'index']);
 

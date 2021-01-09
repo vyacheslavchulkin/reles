@@ -9,19 +9,18 @@
     </div>
     <div>
         <form action="{{ route('teacher-lesson') }}">
-        <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
             <select class="custom-select mb-3" id="subject" name="subject">
                 <option disabled selected>предмет</option>
-                <option value="1">Математика</option>
-                <option value="2">Физика</option>
-                <option value="3">Русский язык</option>
-                <option value="4">История</option>
+                @foreach($subjects as $subject)
+                    <option value="{{ $subject->id }}">{{ $subject->name }}</option>
+                @endforeach
             </select>
             <select class="custom-select mb-3" id="grade" name="grade">
                 <option disabled selected>класс</option>
-                <option value="1">7a</option>
-                <option value="2">8d</option>
-                <option value="3">10a</option>
+                @foreach($grades as $grade)
+                    <option value="{{ $grade->id }}">{{ $grade->name }}</option>
+                @endforeach
             </select>
             <div class="input-group date mb-3" id="datetimepicker">
                 <input type="text" class="form-control" name="datetime" placeholder="дата и время начала">
@@ -35,37 +34,26 @@
         </form>
 
         <form action="{{ route('teacher-lesson-create') }}" method="get" class="text-center">
-            <button type="submit" class="btn btn-outline-success" id="confirm" >создать урок</button>
+            <button type="submit" class="btn btn-outline-success" id="confirm">создать урок</button>
         </form>
     </div>
+    @php ($i = 1)
     <div class="card-deck">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Математика</h5>
-                <h6 class="card-subtitle mb-2 text-muted">6 января 2021 г.</h6>
-                <p class="card-text"> Теорема Виета для квадратного трехчлена. Обратная теорема Виета. Общая формулировка теоремы Виета.</p>
-                <button type="button" class="btn btn-outline-primary mb-3">изменить</button>
-                <button type="button" class="btn btn-outline-danger mb-3">удалить</button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Математика</h5>
-                <h6 class="card-subtitle mb-2 text-muted">6 января 2021 г.</h6>
-                <p class="card-text"> Теорема Виета для квадратного трехчлена. Обратная теорема Виета. Общая формулировка теоремы Виета.</p>
-                <button type="button" class="btn btn-outline-primary mb-3">изменить</button>
-                <button type="button" class="btn btn-outline-danger mb-3">удалить</button>
-            </div>
-        </div>
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Математика</h5>
-                <h6 class="card-subtitle mb-2 text-muted">6 января 2021 г.</h6>
-                <p class="card-text"> Теорема Виета для квадратного трехчлена. Обратная теорема Виета. Общая формулировка теоремы Виета.</p>
-                <button type="button" class="btn btn-outline-primary mb-3">изменить</button>
-                <button type="button" class="btn btn-outline-danger mb-3">удалить</button>
-            </div>
-        </div>
+        @foreach($lessons as $lesson)
+            @if($i % 3 === 0)<div class="card-deck">@endif
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $lesson->name }}</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">{{ $lesson->starts_at }}</h6>
+                            <p class="card-text"> {{ $lesson->theme }}</p>
+                            <p class="card-text"> {{ $lesson->description }}</p>
+                            <a href="#" class="btn btn-outline-primary mb-3">изменить</a>
+                            <a href="#" class="btn btn-outline-danger mb-3">удалить</a>
+                        </div>
+                    </div>
+            @if($i % 3 === 0)</div>@endif
+            @php ($i++)
+        @endforeach
     </div>
 
 @endsection
