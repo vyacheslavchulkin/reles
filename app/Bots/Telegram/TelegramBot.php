@@ -5,10 +5,7 @@ namespace App\Bots\Telegram;
 
 
 use App\Bots\Interfaces\BotInterface;
-use App\Bots\Telegram\Traits\TelegramBotHomework;
-use App\Bots\Telegram\Traits\TelegramBotRedis;
-use App\Bots\Telegram\Traits\TelegramBotRegistration;
-use App\Bots\Telegram\Traits\TelegramBotReply;
+use App\Bots\Telegram\Traits\TelegramBotBase;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Redis;
 use Telegram\Bot\Answers\Answerable;
@@ -20,10 +17,7 @@ class TelegramBot implements BotInterface
 {
     use Answerable;
     use Telegram;
-    use TelegramBotHomework;
-    use TelegramBotRedis;
-    use TelegramBotRegistration;
-    use TelegramBotReply;
+    use TelegramBotBase;
 
 
     private Collection $message;
@@ -39,7 +33,7 @@ class TelegramBot implements BotInterface
      */
     public function __construct()
     {
-        $this->telegram = new Api();
+        $this->telegram = new Api(config('telegram.bots.mybot.token'));
         $this->update = $this->telegram->getWebhookUpdate();
         $this->message = $this->update->getMessage();
         $this->chatId = (int)$this->message->chat->id;
@@ -98,42 +92,5 @@ class TelegramBot implements BotInterface
             default:
                 $this->cleanDialogCondition();
         }
-    }
-
-
-    /**
-     * @return bool
-     */
-    private function checkCallBackData(): bool
-    {
-        return ($this->update->detectType() == "callback_query");
-    }
-
-
-    /**
-     * @return array
-     */
-    private function callbackQueryParser(): array
-    {
-        $query = (string)$this->update->callbackQuery->data;
-        $explode = explode("_", $query);
-        return [
-            "type" => $explode[0],
-            "id" => (string)$explode[1],
-        ];
-    }
-
-
-    /**
-     * @return bool
-     */
-    private function isCommand(): bool
-    {
-        $text = $this->messageText;
-        if (substr($text, 0, 1) == "/") {
-            $command = explode(" ", substr($text, 1))[0];
-            return array_key_exists(trim($command), $this->telegram->getCommands());
-        }
-        return false;
     }
 }
