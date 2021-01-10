@@ -8,8 +8,8 @@
         <h3>Расписание</h3>
     </div>
     <div>
-        <form action="{{ route('teacher-lesson') }}">
-            <input type="hidden" name="_token" value="{{ csrf_token() }}"/>
+        <form action="{{ route('teacher-lesson-filter') }}" method="post">
+            @csrf
             <select class="custom-select mb-3" id="subject" name="subject">
                 <option disabled selected>предмет</option>
                 @foreach($subjects as $subject)
@@ -44,7 +44,7 @@
             <div class="col col-md-8 col-xl-4 col-lg-2">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $lesson->name }}</h5>
+                        <h5 class="card-title">{{ $lesson->sname }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ $lesson->starts_at }}</h6>
                         <p class="card-text"> {{ $lesson->theme }}</p>
                         <p class="card-text"> {{ $lesson->description }}</p>
@@ -65,26 +65,5 @@
     <script src="{{ asset("js/datetimepicker/4.5.0_js_bootstrap.js") }}"></script>
     <script src="{{ asset("js/datetimepicker/2.26.0_moment.js") }}"></script>
     <script src="{{ asset("js/datetimepicker/bootstrap-datetimepicker.min.js") }}"></script>
-    <script>
-        $(function () {
-            $.extend(true, $.fn.datetimepicker.defaults, {
-                icons: {
-                    time: 'far fa-clock',
-                    date: 'far fa-calendar',
-                    up: 'fas fa-arrow-up',
-                    down: 'fas fa-arrow-down',
-                    previous: 'fas fa-chevron-left',
-                    next: 'fas fa-chevron-right',
-                    today: 'far fa-calendar-check-o',
-                    clear: 'far fa-trash',
-                    close: 'far fa-times'
-                }
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(function () {
-            $('#datetimepicker').datetimepicker();
-        });
-    </script>
+    <script src="{{ asset("js/datetimepicker/datepickerconfig.js") }}"></script>
 @endpush

@@ -6,7 +6,11 @@ use App\Http\Requests\LessonRequest;
 use App\Models\Grade;
 use App\Models\Lesson;
 use App\Models\Subject;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
+use Illuminate\Contracts\View\View;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -15,12 +19,13 @@ class LessonController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View|Response
      */
     public function index()
     {
         $lessons = DB::table('lessons')
-            ->join('subjects', 'subjects.id', '=', 'lessons.subject_id')
+            ->selectRaw('`lessons`.*, `subjects`.`id` as `sid`, `subjects`.`name` as `sname`')
+            ->join('subjects', 'lessons.subject_id', '=', 'subjects.id')
             ->where('lessons.teacher_id', '=', Auth::user()->id)
             ->get();
 
@@ -30,7 +35,7 @@ class LessonController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
+     * @return Application|Factory|View|Response
      */
     public function create()
     {
@@ -60,19 +65,30 @@ class LessonController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Lesson  $lesson
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
      */
-    public function show(Lesson $lesson)
+    public function show(Request $request)
     {
-        //
+        $subject = $request->input('subject', '');
+//        $grade = $request->input('grade', '');
+//        $datetime = $request->input('datetime', '');
+
+        $lessons = DB::table('lessons')
+            ->selectRaw('`lessons`.*, `subjects`.`id` as `sid`, `subjects`.`name` as `sname`')
+            ->join('subjects', 'lessons.subject_id', '=', 'subjects.id')
+            ->where('lessons.teacher_id', '=', Auth::user()->id)
+            ->where('subjects.id', '=', $subject)
+            ->get();
+
+        return view('teacher.lesson.index', ['lessons' => $lessons, 'grades' => Grade::all(), 'subjects' => Subject::where('teacher_id', '=', Auth::user()->id)->get()]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\Lesson  $lesson
-     * @return \Illuminate\Http\Response
+     * @param Lesson $lesson
+     * @return Response
      */
     public function edit(Lesson $lesson)
     {
@@ -83,8 +99,8 @@ class LessonController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Lesson  $lesson
-     * @return \Illuminate\Http\Response
+     * @param Lesson $lesson
+     * @return Response
      */
     public function update(Request $request, Lesson $lesson)
     {
@@ -94,8 +110,8 @@ class LessonController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Lesson  $lesson
-     * @return \Illuminate\Http\Response
+     * @param Lesson $lesson
+     * @return Response
      */
     public function destroy(Lesson $lesson)
     {

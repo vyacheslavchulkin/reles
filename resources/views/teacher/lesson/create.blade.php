@@ -60,26 +60,5 @@
     <script src="{{ asset("js/datetimepicker/4.5.0_js_bootstrap.js") }}"></script>
     <script src="{{ asset("js/datetimepicker/2.26.0_moment.js") }}"></script>
     <script src="{{ asset("js/datetimepicker/bootstrap-datetimepicker.min.js") }}"></script>
-    <script>
-        $(function () {
-            $.extend(true, $.fn.datetimepicker.defaults, {
-                icons: {
-                    time: 'far fa-clock',
-                    date: 'far fa-calendar',
-                    up: 'fas fa-arrow-up',
-                    down: 'fas fa-arrow-down',
-                    previous: 'fas fa-chevron-left',
-                    next: 'fas fa-chevron-right',
-                    today: 'far fa-calendar-check-o',
-                    clear: 'far fa-trash',
-                    close: 'far fa-times'
-                }
-            });
-        });
-    </script>
-    <script type="text/javascript">
-        $(function () {
-            $('#datetimepicker').datetimepicker();
-        });
-    </script>
+    <script src="{{ asset("js/datetimepicker/datepickerconfig.js") }}"></script>
 @endpush
