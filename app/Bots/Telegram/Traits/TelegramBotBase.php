@@ -13,6 +13,7 @@ trait TelegramBotBase
     use TelegramBotHomework;
     use TelegramBotRedis;
     use TelegramBotReply;
+    use TelegramBotRegistration;
     use Telegram;
 
 
