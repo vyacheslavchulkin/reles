@@ -20,17 +20,18 @@
     </style>
 </head>
 <body>
-@include('layouts.main.top_menu')
-@yield('topMenu')
 <main>
     <div class="container">
-    @yield('content')
+        @include('layouts.main.header')
+        @yield('topMenu')
+        @include('layouts.main.notice')
+        @yield('content')
+        <footer>
+            @include('layouts.main.footer')
+            @yield('footer')
+        </footer>
     </div>
 </main>
-<footer>
-    @include('layouts.main.footer')
-    @yield('footer')
-</footer>
-@yield('scripts')
+@stack('scripts')
 </body>
 </html>
