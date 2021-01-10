@@ -23,7 +23,8 @@ services:
       - 80:80
       - 443:443
     volumes:
-      - ./docker/nginx/default-dev.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/default-prod.conf:/etc/nginx/conf.d/default.conf
+      - ./docker/nginx/ssl:/etc/nginx/ssl
       - ./:/var/www/html
       - ./docker/var/run:/var/run/
       - ./docker/var/log:/var/log/
@@ -66,13 +67,6 @@ services:
     command: redis-server
     ports:
       - 6379:6379
-
-  mailhog:
-    image: mailhog/mailhog:latest
-    hostname: mailhog
-    ports:
-      - 1025:1025
-      - 8025:8025
 
   composer:
     image: composer/composer

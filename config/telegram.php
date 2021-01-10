@@ -120,6 +120,7 @@ return [
         App\Bots\Telegram\Commands\HomeworkCommand::class,
         App\Bots\Telegram\Commands\HelpCommand::class,
         App\Bots\Telegram\Commands\RegistrationCommand::class,
+        App\Bots\Telegram\Commands\ScheduleCommand::class,
     ],
 
     /*
