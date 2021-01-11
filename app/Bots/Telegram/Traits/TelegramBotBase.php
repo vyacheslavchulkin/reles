@@ -26,12 +26,6 @@ trait TelegramBotBase
     }
 
 
-    private function isRegistered(): bool
-    {
-        return true; // TODO заглушка для проверки авторизаци
-    }
-
-
     private function callbackQueryParser(): array
     {
         $query = (string)$this->update->callbackQuery->data;

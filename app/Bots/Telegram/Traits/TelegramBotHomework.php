@@ -4,11 +4,13 @@
 namespace App\Bots\Telegram\Traits;
 
 
+use App\Jobs\TelegramHomeworkHitJob;
+
 trait TelegramBotHomework
 {
-    protected function homeworkDialog(array  $dialogCondition, bool $newDialog = false): void
+    protected function homeworkDialog(array $dialogCondition, bool $newDialog = false): void
     {
-        if($this->isRegistered()) {
+        if ($this->isRegistered()) {
             if ($newDialog) {
                 $this->startHomeworkDialog($dialogCondition);
             } else {
@@ -29,17 +31,32 @@ trait TelegramBotHomework
     }
 
 
-    private function resumeHomeworkDialog(array  $dialogCondition): void
+    private function resumeHomeworkDialog(array $dialogCondition): void
     {
-        // TODO убрать в отдельный класс
-        $homeworkList = $this->getHomeworkList();
-        $text = "Домашнее задание <strong>{$homeworkList[$dialogCondition["id"]]}</strong> отправлено на проверку.";
-        $buttons = [
-            [['text' => "Отправить еще один файл", "callback_data" => "hw_{$dialogCondition["id"]}"]],
-            [['text' => "⏪ Список домашних заданий", "callback_data" => "cmd_hw"]]
-        ];
-        $this->replyWithKeyboard($text, $buttons, true); // TODO Заглушка задание отправлено
-        $this->cleanDialogCondition();
+        $message = $this->message;
+        switch ($message->detectType()) {
+            case "document":
+                $this->runHomeworkJob($message->document->fileId, $dialogCondition);
+                break;
+            case "sticker":
+                $this->runHomeworkJob($message->sticker->fileId, $dialogCondition);
+                break;
+            case "video":
+                $this->runHomeworkJob($message->video->fileId, $dialogCondition);
+                break;
+            case "voice":
+                $this->runHomeworkJob($message->voice->fileId, $dialogCondition);
+                break;
+            case "audio":
+                $this->runHomeworkJob($message->audio->fileId, $dialogCondition);
+                break;
+            case "photo":
+                $this->runHomeworkJob($this->getMaxSizePhotoFileId(), $dialogCondition);
+                break;
+            default:
+                $this->reply("Прикрепите файл к сообщению!");
+                break;
+        }
     }
 
 
@@ -51,5 +68,34 @@ trait TelegramBotHomework
             3333 => "Математика. Рассчитать факториал 1000000.",
             4444 => "Биология. Выучить названия костей человека.",
         ]; // TODO: Заглушка для списка заданий
+    }
+
+    private function runHomeworkJob(string $fileId, array $dialogCondition): void
+    {
+        TelegramHomeworkHitJob::dispatch($this->chatId, $fileId, $dialogCondition["id"]);
+
+        $homeworkList = $this->getHomeworkList();
+        $text = "Домашнее задание <strong>{$homeworkList[$dialogCondition["id"]]}</strong> отправлено на проверку.";
+        $buttons = [
+            [['text' => "Отправить еще один файл", "callback_data" => "hw_{$dialogCondition["id"]}"]],
+            [['text' => "⏪ Список домашних заданий", "callback_data" => "cmd_hw"]]
+        ];
+        $this->replyWithKeyboard($text, $buttons, true);
+        $this->cleanDialogCondition();
+    }
+
+
+    private function getMaxSizePhotoFileId(): string
+    {
+        $photoList = $this->message->photo;
+        $maxFileSize = 0;
+        $photoId = "";
+        foreach ($photoList->toArray() as $photo) {
+            if ($photo["file_size"] > $maxFileSize) {
+                $photoId = $photo["file_id"];
+                $maxFileSize = $photo["file_size"];
+            }
+        }
+        return $photoId;
     }
 }
