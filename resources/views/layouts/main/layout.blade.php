@@ -6,32 +6,52 @@
 
     <title>RELES - Платформа дистанционного обучения</title>
 
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="/css/app.css" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     @yield('head')
     <style>
         body {
-            font-family: 'Nunito';
+            font-family: 'Nunito', sans-serif;
         }
         @yield('styles')
     </style>
 </head>
 <body>
-<main>
-    <div class="container">
+<div class="modal fade bd-example-modal-lg" id="modal" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalLabel"></h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body" id="modalBody">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <header>
         @include('layouts.main.header')
         @yield('topMenu')
+    </header>
+    <main role="main">
         @include('layouts.main.notice')
         @yield('content')
-        <footer>
-            @include('layouts.main.footer')
-            @yield('footer')
-        </footer>
-    </div>
-</main>
+    </main>
+    <footer>
+        @include('layouts.main.footer')
+        @yield('footer')
+    </footer>
+</div>
 @stack('scripts')
 </body>
 </html>

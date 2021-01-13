@@ -13,7 +13,20 @@
                 <a class="p-2 text-dark" href="{{ route('teacher-lesson') }}">Расписание</a>
                 <a class="p-2 text-dark" href="#">Домашние задания</a>
             </nav>
-            <a class="btn btn-outline-primary" href="{{ route('logout') }}">Выйти</a>
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-dark"
+                   href="#"
+                   id="navbarDropdownMenuLink"
+                   data-toggle="dropdown"
+                   aria-haspopup="true"
+                   aria-expanded="false">
+                {{ Auth::user()->first_name }}  {{ Auth::user()->last_name }}
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item text-dark" href="{{ route('profile') }}">Профиль</a>
+                    <a class="dropdown-item text-primary" href="{{ route('logout') }}">Выйти</a>
+                </div>
+            </div>
         @endauth
     </div>
 @endsection
