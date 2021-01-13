@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+Route::get('/profile', 'App\Http\Controllers\Auth\ProfileController@index')->name('profile');
 
 
 Route::get('/', [SiteController::class, 'index'])->name('main');
