@@ -29,6 +29,9 @@ $(document).ready(function () {
                 }).catch((error) => {
                     formService.disableForm();
                     formService.enableAllElements();
+                    if(error.response.data.message){
+                        showModal(error.response.data.message);
+                    }
                     let errors = error.response.data.errors;
                     formService.showErrors(errors);
                 });
