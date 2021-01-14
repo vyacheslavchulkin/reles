@@ -72,6 +72,17 @@ export class FormService {
         this.button.removeClass("disabled");
     }
 
+
+    showErrors(errors){
+        if (Object.keys(errors).length > 0) {
+            for (let key of Object.keys(errors)) {
+                this.form.find("[name=" + key + "]").each(function (){
+                    FormService.addErrorLabel($(this), errors[key])
+                });
+            }
+        }
+    }
+
     static checkRequired(inputNode) {
         if (inputNode.val().length < 1) {
             this.addErrorLabel(inputNode, "Это поле обязательно для заполнения");
@@ -86,7 +97,7 @@ export class FormService {
         let reg = /^(\S)+@([\S])+\.([\S]{1,20})$/;
         let value = emailNode.val();
 
-        if (value.length > 0 && !reg.test(value)) {
+        if (value.length < 1 || !reg.test(value)) {
             this.addErrorLabel(emailNode, "Некорректный email");
             return false;
         }
