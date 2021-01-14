@@ -157,41 +157,56 @@
             </div>
 
             @role('pupil')
-            <div class="card mt-3">
-                <div class="card-header">
-                    <h3>Подключить бота</h3>
-                </div>
-                <div class="card-body">
-                    <div class="card-title col-md-10 offset-md-1">
-                        Запустите бота, выберите команду "регистрация"
-                        <span class="badge badge-secondary">/reg</span>
-                        и введите полученный код:
+            @if (Auth::user()->telegram_chat_id > 0)
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h3>Удалить бота</h3>
                     </div>
-                    <form method="POST" class="js-form" action="{{ route('profile') }}">
-
-
-
-                        @csrf
-                        <div class="form-group row align-middle">
-
-                            <div class="col-md-7 offset-md-1">
-                                <input id="tg_bot_reg_code"
-                                       type="text"
-                                       class="form-control"
-                                       name="tg_bot_reg_code"
-                                       required
-                                       autofocus>
-                                <span class="invalid-feedback" role="alert"></span>
+                    <div class="card-body">
+                        <form method="DELETE" class="js-form" action="{{ route('delTelegramBot') }}">
+                            @csrf
+                            <div class="form-group row align-middle">
+                                <div class="col-md-3">
+                                    <input type="submit" class="btn btn-primary js-form-send" value="{{ __('Удалить') }}">
+                                </div>
                             </div>
-                            <div class="col-md-3">
-                                <input type="submit" class="btn btn-primary js-form-send"
-                                       value="{{ __('Подключить') }}">
-                            </div>
-
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
-            </div>
+            @else
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h3>Подключить бота</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-title col-md-10 offset-md-1">
+                            Запустите бота, выберите команду "регистрация"
+                            <span class="badge badge-secondary">/reg</span>
+                            и введите полученный код:
+                        </div>
+                        <form method="POST" class="js-form" action="{{ route('addTelegramBot') }}">
+                            @csrf
+                            <div class="form-group row align-middle">
+
+                                <div class="col-md-7 offset-md-1">
+                                    <input id="tg_bot_reg_code"
+                                           type="text"
+                                           class="form-control"
+                                           name="tg_bot_reg_code"
+                                           required
+                                           autofocus>
+                                    <span class="invalid-feedback" role="alert"></span>
+                                </div>
+                                <div class="col-md-3">
+                                    <input type="submit" class="btn btn-primary js-form-send"
+                                           value="{{ __('Подключить') }}">
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            @endif
             @endrole
 
         </div>

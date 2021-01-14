@@ -5,6 +5,7 @@ $(document).ready(function () {
     $(".js-form").each(function () {
         const formNode = $(this);
         const url = formNode.attr("action");
+        const method = formNode.attr("method");
         const formService = new FormService(formNode);
         let isValidForm = false;
         setInterval(function () {
@@ -19,20 +20,17 @@ $(document).ready(function () {
 
         formNode.on("submit", function (e) {
             e.preventDefault();
-
             if (isValidForm) {
                 const data = formNode.serialize();
                 formService.disableAllElements();
-
-                // $.post(url, data);
-                // TODO заглушка
-                function sleep(time) {
-                    return new Promise((resolve) => setTimeout(resolve, time));
-                }
-
-                sleep(2000).then(() => {
+                axios({url: url, data: data, method: method}).then(response => {
                     formService.cleanForm();
-                    showModal(data, url);
+                    showModal(response.data.message);
+                }).catch((error) => {
+                    formService.disableForm();
+                    formService.enableAllElements();
+                    let errors = error.response.data.errors;
+                    formService.showErrors(errors);
                 });
             }
         });

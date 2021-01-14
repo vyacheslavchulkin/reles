@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
-Route::get('/profile', 'App\Http\Controllers\Auth\ProfileController@index')->name('profile');
+Route::get('/profile', 'App\Http\Controllers\Auth\ProfileController@index')
+    ->name('profile')
+    ->middleware('auth');
 
 
 Route::get('/', [SiteController::class, 'index'])->name('main');
@@ -49,5 +51,14 @@ Route::get('/teacher/delete-lesson/{id}', [LessonController::class, 'delete'])
     ->middleware('auth')
     ->middleware('EnsureUserHasRoleTeacher');
 
+
 // Telegram bot
 Route::post('/' . config('telegram.bots.mybot.token') . '/webhook', [TelegramController::class, "webhook"]);
+
+Route::post("/telegram/bot/add", [TelegramController::class, "addBot"])
+    ->name("addTelegramBot")
+    ->middleware('auth');
+
+Route::delete("/telegram/bot/del", [TelegramController::class, "deleteBot"])
+    ->name("delTelegramBot")
+    ->middleware('auth');
