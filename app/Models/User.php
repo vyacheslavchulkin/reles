@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\RoleEnum;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\MediaLibrary\HasMedia;
@@ -63,6 +64,21 @@ class User extends Authenticatable implements HasMedia
     public function scopePupils(Builder $builder): Builder
     {
         return $builder->where('user_type', RoleEnum::PUPIL);
+    }
+
+    public function homeworks(): HasMany
+    {
+        return $this->hasMany(Homework::class, 'pupil_id');
+    }
+
+    public function unfinishedHomeworks(): HasMany
+    {
+        return $this->homeworks()->whereNull('sent_at');
+    }
+
+    public function finishedHomeworks(): HasMany
+    {
+        return $this->homeworks()->whereNotNull('sent_at');
     }
 
     public function registerMediaCollections(): void

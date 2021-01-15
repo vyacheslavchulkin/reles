@@ -32,7 +32,7 @@ class HomeworkFactory extends Factory
 
             'starts_at'   => $this->faker->dateTimeInInterval('-1 week', 'now'),
             'finishes_at' => $this->faker->dateTimeInInterval('now', '+1 week'),
-            'sent_at'     => $this->faker->dateTimeInInterval('-1 week', 'now'),
+            'sent_at'     => $this->faker->boolean ? $this->faker->dateTimeInInterval('-1 week', 'now') : null,
 
             'message'     => $this->faker->sentence(20, true),
             'description' => $this->faker->sentence(5, true),
