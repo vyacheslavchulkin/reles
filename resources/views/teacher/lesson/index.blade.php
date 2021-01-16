@@ -60,9 +60,6 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset("js/datetimepicker/jquery-3.5.1.slim.js") }}"></script>
-    <script src="{{ asset("js/datetimepicker/popper.js") }}"></script>
-    <script src="{{ asset("js/datetimepicker/4.5.0_js_bootstrap.js") }}"></script>
     <script src="{{ asset("js/datetimepicker/2.26.0_moment.js") }}"></script>
     <script src="{{ asset("js/datetimepicker/bootstrap-datetimepicker.min.js") }}"></script>
     <script src="{{ asset("js/datetimepicker/datepickerconfig.js") }}"></script>

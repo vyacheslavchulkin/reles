@@ -10,7 +10,7 @@
                 <h3>Добавить новый урок</h3>
             </div>
             <div class="lesson ">
-                <form class="form-group" method="post" action="{{ route('teacher-lesson-store') }}">
+                <form class="form-group" enctype="multipart/form-data" method="post" action="{{ route('teacher-lesson-store') }}">
                     @csrf
                     <select class="custom-select mb-3" id="subject" name="subject">
                         <option disabled selected>предмет</option>
@@ -39,10 +39,8 @@
                     <textarea class="form-control mb-3" name="description"
                               placeholder="дополнительная информация"></textarea>
 
-                    <div class="custom-file mb-3">
-                        <input type="file" class="custom-file-input" id="customFile" name="file">
-                        <label class="custom-file-label" for="customFile">загрузить материалы</label>
-                    </div>
+                    <input type="file" multiple class="mb-3" id="customFile" name="file">
+
                     <div class="text-center mb-3">
                         <button type="submit" class="btn btn-outline-primary" id="confirm">отправить</button>
                     </div>
@@ -55,9 +53,6 @@
 @endsection
 
 @push('scripts')
-    <script src="{{ asset("js/datetimepicker/jquery-3.5.1.slim.js") }}"></script>
-    <script src="{{ asset("js/datetimepicker/popper.js") }}"></script>
-    <script src="{{ asset("js/datetimepicker/4.5.0_js_bootstrap.js") }}"></script>
     <script src="{{ asset("js/datetimepicker/2.26.0_moment.js") }}"></script>
     <script src="{{ asset("js/datetimepicker/bootstrap-datetimepicker.min.js") }}"></script>
     <script src="{{ asset("js/datetimepicker/datepickerconfig.js") }}"></script>
