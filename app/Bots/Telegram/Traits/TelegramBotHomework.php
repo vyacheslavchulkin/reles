@@ -5,6 +5,7 @@ namespace App\Bots\Telegram\Traits;
 
 
 use App\Jobs\TelegramHomeworkHitJob;
+use App\Models\User;
 
 trait TelegramBotHomework
 {
@@ -62,12 +63,18 @@ trait TelegramBotHomework
 
     private function getHomeworkList(): array
     {
-        return [
-            1111 => "Физика. Измерить длину экватора.",
-            2222 => "Летиратура. Выучит наизусь паэму 'Руслан и Людмила'.",
-            3333 => "Математика. Рассчитать факториал 1000000.",
-            4444 => "Биология. Выучить названия костей человека.",
-        ]; // TODO: Заглушка для списка заданий
+        $homeworkList = [];
+
+        if ($this->isRegistered()) {
+            $user = User::find($this->userId);
+            $homeworkList = $user->unfinishedHomeworks()
+                ->getResults()
+                ->mapWithKeys(function ($item) {
+                    return [$item->lesson_id => $item->theme];
+                })
+                ->toArray();
+        }
+        return $homeworkList;
     }
 
     private function runHomeworkJob(string $fileId, array $dialogCondition): void
