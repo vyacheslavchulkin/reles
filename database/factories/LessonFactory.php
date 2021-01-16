@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Grade;
 use App\Models\Lesson;
 use App\Models\Subject;
 use App\Models\User;
@@ -26,6 +27,7 @@ class LessonFactory extends Factory
         return [
             'subject_id' => Subject::inRandomOrder()->take(1)->first(),
             'teacher_id'  => User::teachers()->inRandomOrder()->take(1)->first(),
+            'grade_id'  => Grade::inRandomOrder()->take(1)->first(),
             'theme'       => $this->faker->sentence,
             'description' => $this->faker->sentence(5, true),
             /**

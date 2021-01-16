@@ -65,6 +65,7 @@ class LessonController extends Controller
         $lesson->description = $request->input('description');
         $lesson->starts_at = $date->format(self::DATE_TIME_FORMAT);
         $lesson->finishes_at = $date->format(self::DATE_TIME_FORMAT);
+        $lesson->grade_id = $request->input('grade');
 
         if($request->hasFile('file')) {
             $lesson->addMediaFromRequest('file')->toMediaCollection('files');
@@ -110,13 +111,12 @@ class LessonController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param Lesson $lesson
-     * @return Response
+     * @param $id
+     * @param Request $request
      */
-    public function update(Request $request, Lesson $lesson)
+    public function update($id, Request $request)
     {
-        //
+        return view('teacher.lesson.create',  ['grades' => Grade::all(), 'subjects' => Subject::where('teacher_id', '=', Auth::user()->id)->get(), 'lesson' => Lesson::find($id)]);
     }
 
     /**
