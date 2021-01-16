@@ -4,17 +4,18 @@
 namespace App\Bots\Telegram\Commands;
 
 
-use App\Bots\Telegram\Traits\TelegramBotReply;
+use App\Bots\Telegram\Traits\TelegramBotBase;
 use Telegram\Bot\Commands\Command;
 use Telegram\Bot\Exceptions\TelegramSDKException;
 
 class RegistrationCommand extends Command
 {
-    use TelegramBotReply;
+    use TelegramBotBase;
 
 
     protected $name = 'reg';
     protected $description = 'Регистрация';
+    private int $chatId;
 
 
     /**
@@ -22,11 +23,15 @@ class RegistrationCommand extends Command
      */
     public function handle()
     {
-        // TODO: Заглушка регистрации
+        $this->chatId = $this->update->getChat()->id;
         $buttons = [];
-        $code = rand(11111, 999999);
-        $text = "Ваш код для реситрации:\n";
-        $text .= $code;
+        if($this->isRegistered())
+        {
+            $text = "Вы уже зарегистрированы";
+        } else {
+            $code = $this->generateCode();
+            $text = "Ваш код для реситрации:\n <b>{$code}</b>";
+        }
         $this->replyWithKeyboard($text, $buttons, true);
     }
 }

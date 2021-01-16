@@ -33,16 +33,19 @@ trait TelegramBotReply
         }
 
         $keyboard = ['inline_keyboard' => $buttons];
-        $this->replyWithMessage([
-            'text' => $text,
-            "reply_markup" => json_encode($keyboard),
-            "parse_mode" => "html",
-        ]);
-
         if ($this->checkCallBackData()) {
-            $this->telegram->deleteMessage([
+            $this->telegram->editMessageText([
                 "message_id" => $this->update->callbackQuery->message->messageId,
                 "chat_id" => $this->update->callbackQuery->message->chat->id,
+                'text' => $text,
+                "reply_markup" => json_encode($keyboard),
+                "parse_mode" => "html",
+            ]);
+        } else {
+            $this->replyWithMessage([
+                'text' => $text,
+                "reply_markup" => json_encode($keyboard),
+                "parse_mode" => "html",
             ]);
         }
     }

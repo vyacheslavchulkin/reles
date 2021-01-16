@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Jobs\HomeworkHitJob;
 use App\Models\Homework;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

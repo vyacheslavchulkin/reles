@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Homework;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class HomeworkSeeder extends Seeder
@@ -14,6 +15,10 @@ class HomeworkSeeder extends Seeder
      */
     public function run()
     {
-        Homework::factory()->count(10)->create();
+        User::pupils()->get()->each(function (User $user) {
+            Homework::factory()->count(10)->create([
+                'pupil_id' => $user->id,
+            ]);
+        });
     }
 }

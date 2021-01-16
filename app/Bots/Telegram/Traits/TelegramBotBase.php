@@ -13,6 +13,7 @@ trait TelegramBotBase
     use TelegramBotHomework;
     use TelegramBotRedis;
     use TelegramBotReply;
+    use TelegramBotRegistration;
     use Telegram;
 
 
@@ -22,12 +23,6 @@ trait TelegramBotBase
     private function checkCallBackData(): bool
     {
         return ($this->update->detectType() == "callback_query");
-    }
-
-
-    private function isRegistered(): bool
-    {
-        return true; // TODO заглушка для проверки авторизаци
     }
 
 
