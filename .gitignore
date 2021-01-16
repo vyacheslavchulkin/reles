@@ -62,3 +62,8 @@ npm-debug.log
 yarn-error.log
 /DB_DATA/mysql/
 /DB_DATA/redis/
+/public/js/app.js
+/public/js/app.js.map
+/public/js/app.js.LICENSE.txt
+/public/css/app.css
+/public/css/app.css.map
