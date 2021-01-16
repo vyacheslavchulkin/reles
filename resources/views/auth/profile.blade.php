@@ -158,33 +158,29 @@
 
             @role('pupil')
             @if (Auth::user()->telegram_chat_id > 0)
-                <div class="card mt-3">
-                    <div class="card-header">
-                        <h3>Удалить бота</h3>
-                    </div>
-                    <div class="card-body">
-                        <form method="DELETE" class="js-form" action="{{ route('delTelegramBot') }}">
-                            @csrf
-                            <div class="form-group row align-middle">
-                                <div class="col-md-3">
-                                    <input type="submit" class="btn btn-primary js-form-send" value="{{ __('Удалить') }}">
-                                </div>
-                            </div>
-                        </form>
-                    </div>
+                @push('scripts')
+                    <script>
+                        telegramBotEnaBle = true;
+                    </script>
+                @endpush
+            @endif
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h3>Telegram бот</h3>
                 </div>
-            @else
-                <div class="card mt-3">
-                    <div class="card-header">
-                        <h3>Подключить бота</h3>
-                    </div>
-                    <div class="card-body">
+                <div class="card-body">
+                    <span type="submit" class="btn btn-primary js-telegram-del"
+                          data-action="{{ route('delTelegramBot') }}">
+                            Отключить бота
+                    </span>
+
+                    <div class="js-telegram-add">
                         <div class="card-title col-md-10 offset-md-1">
                             Запустите бота, выберите команду "регистрация"
                             <span class="badge badge-secondary">/reg</span>
                             и введите полученный код:
                         </div>
-                        <form method="POST" class="js-form" action="{{ route('addTelegramBot') }}">
+                        <form method="POST" class="js-form-telegram-add" action="{{ route('addTelegramBot') }}">
                             @csrf
                             <div class="form-group row align-middle">
 
@@ -201,14 +197,12 @@
                                     <input type="submit" class="btn btn-primary js-form-send"
                                            value="{{ __('Подключить') }}">
                                 </div>
-
                             </div>
                         </form>
                     </div>
                 </div>
-            @endif
+            </div>
             @endrole
-
         </div>
     </div>
 @endsection
