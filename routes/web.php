@@ -52,6 +52,9 @@ Route::get('/teacher/delete-lesson/{id}', [LessonController::class, 'destroy'])
     ->middleware('auth')
     ->middleware('EnsureUserHasRoleTeacher');
 
+Route::post('/download', function ($model) {
+    return response()->download($model->getMedia('files')->first()->getPath(), $model->getMedia('files')->first()->file_name);
+})->name('download');
 
 // Telegram bot
 Route::post('/' . config('telegram.bots.mybot.token') . '/webhook', [TelegramController::class, "webhook"]);

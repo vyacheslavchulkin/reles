@@ -7,7 +7,9 @@
     <div class="row justify-content-center">
         <div class="add-lesson col-6">
             <div class="heading text-center mb-3">
-                <h3>Добавить новый урок</h3>
+                @isset($lesson)<h3>Редактирование урока</h3> @else
+                    <h3>Добавить новый урок</h3>
+                @endisset
             </div>
             <div class="lesson ">
                 @isset($lesson)
@@ -49,9 +51,15 @@
                         <div class="text-center mb-3">
                             <button type="submit" class="btn btn-outline-primary" id="confirm">отправить</button>
                         </div>
-
-
                     </form>
+                    @if($lesson->getMedia('files')->isNotEmpty())
+                        <form action="{{ route('download', $lesson) }}" method="post">
+                            @csrf
+                            <p>Загруженные файлы:</p>
+                            <p>{{ $lesson->getMedia('files')->first()->file_name }}</p>
+                            <button type="submit" class="btn btn-outline-primary" id="confirm">скачать</button>
+                        </form>
+                    @endif
                 @else
                     <form class="form-group" enctype="multipart/form-data" method="post"
                           action="{{ route('teacher-lesson-store') }}">
