@@ -46,7 +46,7 @@ Route::post('/teacher/store-lesson', [LessonController::class, 'store'])
     ->middleware('auth')
     ->middleware('EnsureUserHasRoleTeacher');
 
-Route::get('/teacher/delete-lesson/{id}', [LessonController::class, 'delete'])
+Route::get('/teacher/delete-lesson/{id}', [LessonController::class, 'destroy'])
     ->name('teacher-lesson-delete')
     ->middleware('auth')
     ->middleware('EnsureUserHasRoleTeacher');

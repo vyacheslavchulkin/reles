@@ -23,8 +23,8 @@ class CreateLessonsTable extends Migration
 
             //$table->string('video_link')->comment('');
             //$table->string('video_password')->comment('');
-            $table->date('starts_at')->comment('Дата постановки задания');
-            $table->date('finishes_at')->comment('Крайняя сдача домашней работы');
+            $table->dateTime('starts_at')->comment('Дата начала урока');
+            $table->dateTime('finishes_at')->comment('Дата окончания урока');
 
             $table->timestamps();
         });
