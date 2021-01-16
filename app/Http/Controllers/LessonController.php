@@ -79,19 +79,22 @@ class LessonController extends Controller
      * Display the specified resource.
      *
      * @param Request $request
-     * @return void
+     * @return Application|Factory|View
+     * @throws Exception
      */
     public function show(Request $request)
     {
         $subject = $request->input('subject', '');
-//        $grade = $request->input('grade', '');
-//        $datetime = $request->input('datetime', '');
+        $grade = $request->input('grade', '');
+        $datetime = new DateTime($request->input('datetime', ''));
 
         $lessons = DB::table('lessons')
             ->selectRaw('`lessons`.*, `subjects`.`id` as `sid`, `subjects`.`name` as `sname`')
             ->join('subjects', 'lessons.subject_id', '=', 'subjects.id')
             ->where('lessons.teacher_id', '=', Auth::user()->id)
             ->where('subjects.id', '=', $subject)
+            ->where('lessons.grade_id', '=', $grade)
+            ->where('lessons.starts_at', '>=', $datetime->format(self::DATE_TIME_FORMAT))
             ->get();
 
         return view('teacher.lesson.index', ['lessons' => $lessons, 'grades' => Grade::all(), 'subjects' => Subject::where('teacher_id', '=', Auth::user()->id)->get()]);
@@ -114,6 +117,8 @@ class LessonController extends Controller
      *
      * @param $id
      * @param Request $request
+     * @return RedirectResponse
+     * @throws Exception
      */
     public function update($id, Request $request)
     {
@@ -140,7 +145,6 @@ class LessonController extends Controller
      * Remove the specified resource from storage.
      *
      * @param $id
-     * @param Request $request
      * @return RedirectResponse
      */
     public function destroy($id)
