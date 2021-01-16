@@ -122,11 +122,13 @@ class LessonController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Lesson $lesson
-     * @return Response
+     * @param $id
+     * @param Request $request
+     * @return RedirectResponse
      */
-    public function destroy(Lesson $lesson)
+    public function destroy($id)
     {
-        //
+        Lesson::find($id)->delete();
+        return redirect()->route('teacher-lesson')->with('success', 'Урок удален!');
     }
 }

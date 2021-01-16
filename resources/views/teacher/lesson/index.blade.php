@@ -44,12 +44,12 @@
             <div class="col col-md-8 col-xl-4 col-lg-2">
                 <div class="card">
                     <div class="card-body">
-                        <h5 class="card-title">{{ $lesson->sname }}</h5>
+                        <h5 class="card-title text-truncate">{{ $lesson->sname }}</h5>
                         <h6 class="card-subtitle mb-2 text-muted">{{ $lesson->starts_at }}</h6>
-                        <p class="card-text"> {{ $lesson->theme }}</p>
-                        <p class="card-text"> {{ $lesson->description }}</p>
+                        <p class="card-text text-truncate"> {{ $lesson->theme }}</p>
+                        <p class="card-text text-truncate"> {{ $lesson->description }}</p>
                         <a href="#" class="btn btn-outline-primary mb-3">изменить</a>
-                        <a href="#" class="btn btn-outline-danger mb-3">удалить</a>
+                        <a href="{{ route('teacher-lesson-delete', $lesson->id) }}" class="btn btn-outline-danger mb-3">удалить</a>
                     </div>
                 </div>
             </div>
