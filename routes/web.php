@@ -12,18 +12,9 @@ Route::get('/profile', 'App\Http\Controllers\Auth\ProfileController@index')
     ->name('profile')
     ->middleware('auth');
 
-
 Route::get('/', [SiteController::class, 'index'])->name('main');
 
-Route::get(
-    "/hello",
-    function () {
-        return "<h1>Hello, world!</h1>";
-    }
-);
-
 Route::get('/home', [HomeController::class, 'index'])->name('home');
-
 
 //Teacher
 Route::get('/teacher/lesson', [LessonController::class, 'index'])
@@ -46,7 +37,12 @@ Route::post('/teacher/store-lesson', [LessonController::class, 'store'])
     ->middleware('auth')
     ->middleware('EnsureUserHasRoleTeacher');
 
-Route::get('/teacher/update-lesson/{id}', [LessonController::class, 'update'])
+Route::get('/teacher/edit-lesson/{id}', [LessonController::class, 'edit'])
+    ->name('teacher-lesson-edit')
+    ->middleware('auth')
+    ->middleware('EnsureUserHasRoleTeacher');
+
+Route::post('/teacher/edit-lesson/{id}', [LessonController::class, 'update'])
     ->name('teacher-lesson-update')
     ->middleware('auth')
     ->middleware('EnsureUserHasRoleTeacher');

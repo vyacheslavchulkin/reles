@@ -48,7 +48,7 @@
                         <h6 class="card-subtitle mb-2 text-muted">{{ $lesson->starts_at }}</h6>
                         <p class="card-text text-truncate"> {{ $lesson->theme }}</p>
                         <p class="card-text text-truncate"> {{ $lesson->description }}</p>
-                        <a href="{{ route('teacher-lesson-update', $lesson->id) }}" class="btn btn-outline-primary mb-3">изменить</a>
+                        <a href="{{ route('teacher-lesson-edit', $lesson->id) }}" class="btn btn-outline-primary mb-3">изменить</a>
                         <a href="{{ route('teacher-lesson-delete', $lesson->id) }}" class="btn btn-outline-danger mb-3">удалить</a>
                     </div>
                 </div>

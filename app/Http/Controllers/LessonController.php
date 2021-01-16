@@ -100,12 +100,13 @@ class LessonController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Lesson $lesson
-     * @return Response
+     * @param $id
+     * @param Request $request
+     * @return Application|Factory|View
      */
-    public function edit(Lesson $lesson)
+    public function edit($id, Request $request)
     {
-        //
+        return view('teacher.lesson.create',  ['grades' => Grade::all(), 'subjects' => Subject::where('teacher_id', '=', Auth::user()->id)->get(), 'lesson' => Lesson::find($id)]);
     }
 
     /**
@@ -116,7 +117,23 @@ class LessonController extends Controller
      */
     public function update($id, Request $request)
     {
-        return view('teacher.lesson.create',  ['grades' => Grade::all(), 'subjects' => Subject::where('teacher_id', '=', Auth::user()->id)->get(), 'lesson' => Lesson::find($id)]);
+        $lesson = Lesson::find($id);
+        $date = new DateTime($request->input('datetime'));
+
+        $lesson->teacher_id = Auth::user()->id;
+        $lesson->subject_id = $request->input('subject');
+        $lesson->theme = $request->input('theme');
+        $lesson->description = $request->input('description');
+        $lesson->starts_at = $date->format(self::DATE_TIME_FORMAT);
+        $lesson->finishes_at = $date->format(self::DATE_TIME_FORMAT);
+        $lesson->grade_id = $request->input('grade');
+
+        if($request->hasFile('file')) {
+            $lesson->addMediaFromRequest('file')->toMediaCollection('files');
+        }
+
+        $lesson->save();
+        return redirect()->route('main')->with('success', 'Урок был отредактирован!');
     }
 
     /**
