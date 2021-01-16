@@ -12,7 +12,7 @@ class HomeworkController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(): void
+    public function index()
     {
         return view('homework.teacher.index');
     }
