@@ -77,6 +77,17 @@ services:
     ports:
       - 6379:6379
 
+  worker:
+    build:
+      context: ./docker/worker
+      dockerfile: Dockerfile
+    restart: always
+    hostname: worker
+    volumes:
+      - ./:/var/www/html
+    depends_on:
+      - rabbitmq
+
   composer:
     image: composer/composer
     container_name: composer
