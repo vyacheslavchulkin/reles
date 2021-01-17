@@ -79,7 +79,13 @@ trait TelegramBotHomework
 
     private function runHomeworkJob(string $fileId, array $dialogCondition): void
     {
-        TelegramHomeworkHitJob::dispatch($this->chatId, $fileId, $dialogCondition["id"]);
+        TelegramHomeworkHitJob::dispatch(
+            $this->chatId,
+            $fileId,
+            $dialogCondition["id"],
+            $this->loadUserId(),
+            $this->message->caption,
+        );
 
         $homeworkList = $this->getHomeworkList();
         $text = "Домашнее задание <strong>{$homeworkList[$dialogCondition["id"]]}</strong> отправлено на проверку.";

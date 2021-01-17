@@ -16,12 +16,13 @@ trait TelegramBotRegistration
         return ($this->userId > 0);
     }
 
-    public function loadUserId()
+    public function loadUserId(): int
     {
         if ($this->userId == 0) {
             $user = User::where("telegram_chat_id", "=", $this->update->getChat()->id)->first();
             $this->userId = $user->id ?? -1;
         }
+        return $this->userId;
     }
 
 

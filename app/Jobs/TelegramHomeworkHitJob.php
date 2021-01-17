@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Models\HomeworkChat;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
@@ -19,6 +20,8 @@ class TelegramHomeworkHitJob implements ShouldQueue
     protected int $chatId;
     protected string $fileId;
     protected int $homeworkId;
+    protected int $userId;
+    protected string $message;
     private const TELEGRAM_API_URL = "https://api.telegram.org/file/bot";
 
 
@@ -26,11 +29,16 @@ class TelegramHomeworkHitJob implements ShouldQueue
      * Create a new job instance.
      * @param int $chatId
      * @param string $fileId
+     * @param int $homeworkId
+     * @param int $userId
+     * @param string $message
      */
-    public function __construct(int $chatId, string $fileId, int $homeworkId)
+    public function __construct(int $chatId, string $fileId, int $homeworkId, int $userId, ?string $message)
     {
         $this->chatId = $chatId;
         $this->fileId = $fileId;
+        $this->message = $message ?? "";
+        $this->userId = $userId;
         $this->homeworkId = $homeworkId;
     }
 
@@ -61,8 +69,11 @@ class TelegramHomeworkHitJob implements ShouldQueue
 
     private function saveFile(string $fileUrl): void
     {
-        Log::debug($this->chatId);
-        Log::debug($this->homeworkId);
-        Log::debug($fileUrl); // TODO заглушка
+        $chat = new HomeworkChat;
+        $chat->homework_id = $this->homeworkId;
+        $chat->sender_id = $this->userId;
+        $chat->message = $this->message;
+        $chat->save();
+        $chat->addMediaFromUrl($fileUrl)->toMediaCollection('files');
     }
 }
