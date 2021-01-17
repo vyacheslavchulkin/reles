@@ -19,6 +19,11 @@ class AddForeignKeysToLessonsTable extends Migration
                   ->on('users')
                   ->cascadeOnUpdate()
                   ->cascadeOnDelete();
+            $table->foreign('grade_id')
+                ->references('id')
+                ->on('grades')
+                ->cascadeOnUpdate()
+                ->cascadeOnDelete();
         });
     }
 
@@ -27,6 +32,7 @@ class AddForeignKeysToLessonsTable extends Migration
         Schema::table('lessons', function (Blueprint $table) {
             $table->dropForeign(['subject_id']);
             $table->dropForeign(['teacher_id']);
+            $table->dropForeign(['grade_id']);
         });
     }
 }

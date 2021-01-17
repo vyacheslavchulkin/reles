@@ -18,6 +18,7 @@ class CreateLessonsTable extends Migration
 
             $table->unsignedBigInteger('subject_id')->comment('');
             $table->unsignedBigInteger('teacher_id')->comment('');
+            $table->unsignedBigInteger('grade_id')->comment('');
             $table->string('theme')->comment('');
             $table->text('description')->comment('');
 
