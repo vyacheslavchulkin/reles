@@ -18,13 +18,14 @@ class CreateLessonsTable extends Migration
 
             $table->unsignedBigInteger('subject_id')->comment('');
             $table->unsignedBigInteger('teacher_id')->comment('');
+            $table->unsignedBigInteger('grade_id')->comment('');
             $table->string('theme')->comment('');
             $table->text('description')->comment('');
 
             //$table->string('video_link')->comment('');
             //$table->string('video_password')->comment('');
-            $table->date('starts_at')->comment('Дата постановки задания');
-            $table->date('finishes_at')->comment('Крайняя сдача домашней работы');
+            $table->dateTime('starts_at')->comment('Дата начала урока');
+            $table->dateTime('finishes_at')->comment('Дата окончания урока');
 
             $table->timestamps();
         });
