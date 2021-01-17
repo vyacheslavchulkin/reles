@@ -46,21 +46,29 @@
                         <textarea class="form-control mb-3" name="description"
                                   placeholder="дополнительная информация">{{ $lesson->description }}</textarea>
 
-                        <input type="file" multiple class="mb-3" id="customFile" name="file">
+                        <div class="form-group">
+                            <label for="customFile">Допустимый размер не более 25 мб</label>
+                            <input type="file" multiple class="form-control-file mb-3" id="customFile" name="file[]">
+                        </div>
 
                         <div class="text-center mb-3">
                             <button type="submit" class="btn btn-outline-primary" id="confirm">отправить</button>
                         </div>
                     </form>
+
                     @if($lesson->getMedia('files')->isNotEmpty())
-                        <form action="{{ route('download', $lesson) }}" method="post">
+                        <form action="{{ route('download', ['id' => $lesson->id]) }}" method="get">
                             @csrf
                             <p>Загруженные файлы:</p>
-                            <p>{{ $lesson->getMedia('files')->first()->file_name }}</p>
+                            @foreach($lesson->getMedia('files')->all() as $lessonFile)
+                                <p>{{ $lessonFile->file_name }}</p>
+                            @endforeach
                             <button type="submit" class="btn btn-outline-primary" id="confirm">скачать</button>
                         </form>
                     @endif
+
                 @else
+
                     <form class="form-group" enctype="multipart/form-data" method="post"
                           action="{{ route('teacher-lesson-store') }}">
                         @csrf
@@ -91,7 +99,10 @@
                         <textarea class="form-control mb-3" name="description"
                                   placeholder="дополнительная информация"></textarea>
 
-                        <input type="file" multiple class="mb-3" id="customFile" name="file">
+                        <div class="form-group">
+                            <label for="customFile">Допустимый размер не более 25 мб</label>
+                            <input type="file" multiple class="form-control-file mb-3" id="customFile" name="file[]">
+                        </div>
 
                         <div class="text-center mb-3">
                             <button type="submit" class="btn btn-outline-primary" id="confirm">отправить</button>

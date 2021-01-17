@@ -10,20 +10,18 @@
     <div>
         <form action="{{ route('teacher-lesson-filter') }}" method="post">
             @csrf
-            <select class="custom-select mb-3" id="subject" name="subject">
-                <option disabled selected>предмет</option>
+            <select class="custom-select mb-3" required id="subject" name="subject">
                 @foreach($subjects as $subject)
                     <option value="{{ $subject->id }}">{{ $subject->name }}</option>
                 @endforeach
             </select>
-            <select class="custom-select mb-3" id="grade" name="grade">
-                <option disabled selected>класс</option>
+            <select class="custom-select mb-3" required id="grade" name="grade">
                 @foreach($grades as $grade)
                     <option value="{{ $grade->id }}">{{ $grade->name }}</option>
                 @endforeach
             </select>
             <div class="input-group date mb-3" id="datetimepicker">
-                <input type="text" class="form-control" name="datetime" placeholder="дата и время начала">
+                <input type="text" class="form-control" name="datetime" required placeholder="дата и время начала">
                 <div class="input-group-addon input-group-prepend">
                     <span class="input-group-text"><i class="fas fa-calendar"></i></span>
                 </div>
