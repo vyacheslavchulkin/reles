@@ -71,7 +71,7 @@ trait TelegramBotReply
     public function reply(string $text = "", ?int $messageId = null): int
     {
         $params = [];
-        $params["chat_id"] = $this->chatId;
+        $params["chat_id"] = $this->update->getChat()->id;
         $params["text"] = $text;
         if ($messageId) {
             $params["message_id"] = $messageId;
