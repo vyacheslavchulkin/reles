@@ -6,14 +6,12 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\SiteController;
 use App\Http\Controllers\TeachingController;
 use App\Http\Controllers\HomeworkController;
-use App\Http\Controllers\TelegramController;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Spatie\MediaLibrary\Support\MediaStream;
 
 Auth::routes();
-Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+//Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 Route::get('/profile', 'App\Http\Controllers\Auth\ProfileController@index')
     ->name('profile')
     ->middleware('auth');
@@ -52,4 +50,7 @@ Route::delete("/telegram/bot/del", [TelegramController::class, "deleteBot"])
 Route::get('/teaching', [TeachingController::class, 'index']);
 
 // Домашние задания
-Route::get('/homework', [HomeworkController::class, 'index']);
+Route::get('/homework', [HomeworkController::class, 'index'])
+    ->name('teacher-homework')
+    ->middleware('auth')
+    ->middleware('EnsureUserHasRoleTeacher');

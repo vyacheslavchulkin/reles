@@ -3,7 +3,7 @@
 @extends('layouts.main.layout')
 @section('content')
     <div class="container">
-        <div class="row">
+        <div class="row-fluid">
             <h2>Учительская</h2>
             <a href="/homework" class="btn">Домашние задания</a>
         </div>

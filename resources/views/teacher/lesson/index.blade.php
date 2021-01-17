@@ -1,7 +1,9 @@
 @extends('layouts.main.layout')
 
+@push('links')
 <link rel="stylesheet" href="{{ asset("css/datetimepicker/bootstrap-datetimepicker.min.css") }}">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+@endpush
 
 @section('content')
     <div class="heading text-center mb-3">

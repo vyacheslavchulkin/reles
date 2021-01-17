@@ -2,10 +2,10 @@
 ?>
 @extends('layouts.main.layout');
 @section('content')
-    <div class="row">
+    <div class="row-fluid">
         <h2>Домашние задания</h2>
     </div>
-    <div class="row">
+    <div class="row-fluid">
         <div class="form form-inline">
             <div class="form-group">
                 <label for="group">Класс</label>&nbsp;
