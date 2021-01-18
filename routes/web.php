@@ -1,16 +1,17 @@
 <?php
 
-use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LessonController;
-use App\Http\Controllers\SiteController;
 use App\Http\Controllers\TelegramController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\SiteController;
+use App\Http\Controllers\TeachingController;
+use App\Http\Controllers\HomeworkController;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 use Spatie\MediaLibrary\Support\MediaStream;
 
 Auth::routes();
-Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
+//Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
 Route::get('/profile', 'App\Http\Controllers\Auth\ProfileController@index')
     ->name('profile')
     ->middleware('auth');
@@ -32,6 +33,10 @@ Route::middleware(['auth', 'EnsureUserHasRoleTeacher'])->group(function () {
         $model = Lesson::find($id);
         return MediaStream::create('lesson-files.zip')->addMedia($model->getMedia('files'));
     })->name('download');
+    // ЛК преподавателя
+    Route::get('/teaching', [TeachingController::class, 'index']);
+    // Домашние задания
+    Route::get('/homework', [HomeworkController::class, 'index'])->name('teacher-homework');
 });
 
 // Telegram bot
@@ -44,3 +49,5 @@ Route::post("/telegram/bot/add", [TelegramController::class, "addBot"])
 Route::delete("/telegram/bot/del", [TelegramController::class, "deleteBot"])
     ->name("delTelegramBot")
     ->middleware('auth');
+
+

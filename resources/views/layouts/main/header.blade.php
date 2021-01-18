@@ -11,7 +11,7 @@
                 <a class="p-2 text-dark" href="/">Главная</a>
                 <a class="p-2 text-dark" href="#">Материалы</a>
                 <a class="p-2 text-dark" href="{{ route('teacher-lesson') }}">Расписание</a>
-                <a class="p-2 text-dark" href="#">Домашние задания</a>
+                <a class="p-2 text-dark" href="{{ route('teacher-homework') }}">Домашние задания</a>
             </nav>
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-dark"
