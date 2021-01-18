@@ -9,6 +9,7 @@ use App\Http\Controllers\HomeworkController;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
 use Spatie\MediaLibrary\Support\MediaStream;
+use App\Http\Controllers\LessonController;
 
 Auth::routes();
 //Route::get('/logout', 'App\Http\Controllers\Auth\LoginController@logout')->name('logout');
