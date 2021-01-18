@@ -78,7 +78,12 @@ class User extends Authenticatable implements HasMedia
 
     public function finishedHomeworks(): HasMany
     {
-        return $this->homeworks()->whereNotNull('sent_at');
+        return $this->homeworks()->whereNotNull(['sent_at', 'finished_at']);
+    }
+
+    public function sentHomeworks(): HasMany
+    {
+        return $this->homeworks()->whereNotNull(['sent_at'])->whereNull(['finished_at']);
     }
 
     public function registerMediaCollections(): void

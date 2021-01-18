@@ -26,115 +26,22 @@
         </div>
     </div>
     <div class="row mt-3">
+        <?php
+        $i = 0;
+        if (!is_array($homeworks)) {
+            throw new Exception('is not array');
+        }
+        while ($i < count($homeworks)) {
+        $row = array_slice($homeworks, $i * 4, 4);
+        ?>
         <div class="col-md-12">
             <div class="card-deck text-center mb-2">
-                <div class="card shadow-sm mb-2 col-md-3">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Алексеев Константин</h4>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Физика. Измерить длину экватора</h5>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Задание 1 (фото)</li>
-                            <li>Задание 2 (Word)</li>
-                        </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Проверить</button>
-                    </div>
-                </div>
-                <div class="card shadow-sm mb-2 col-md-3">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Алексеев Константин</h4>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Физика. Измерить длину экватора</h5>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Задание 1 (фото)</li>
-                        </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-outline-primary align-text-bottom">Проверить</button>
-                    </div>
-                </div>
-                <div class="card shadow-sm mb-2 col-md-3">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Алексеев Константин</h4>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Физика. Измерить длину экватора</h5>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Задание 1 (фото)</li>
-                            <li>Задание 2 (Word)</li>
-                        </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Проверить</button>
-                    </div>
-                </div>
-                <div class="card shadow-sm mb-2 col-md-3">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Алексеев Константин</h4>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Физика. Измерить длину экватора</h5>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Задание 1 (фото)</li>
-                            <li>Задание 2 (Word)</li>
-                        </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Проверить</button>
-                    </div>
-                </div>
+                @each('homework.teacher.hw_card',$row,'data')
             </div>
         </div>
-        <div class="col-md-12">
-            <div class="card-deck text-center mb-2">
-                <div class="card shadow-sm mb-2 col-md-3">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Алексеев Константин</h4>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Физика. Измерить длину экватора</h5>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Задание 1 (фото)</li>
-                            <li>Задание 2 (Word)</li>
-                        </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Проверить</button>
-                    </div>
-                </div>
-                <div class="card shadow-sm mb-2 col-md-3">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Алексеев Константин</h4>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Физика. Измерить длину экватора</h5>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Задание 1 (фото)</li>
-                        </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-outline-primary align-text-bottom">Проверить</button>
-                    </div>
-                </div>
-                <div class="card shadow-sm mb-2 col-md-3">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Алексеев Константин</h4>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Физика. Измерить длину экватора</h5>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Задание 1 (фото)</li>
-                            <li>Задание 2 (Word)</li>
-                        </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Проверить</button>
-                    </div>
-                </div>
-                <div class="card shadow-sm mb-2 col-md-3">
-                    <div class="card-header">
-                        <h4 class="my-0 font-weight-normal">Алексеев Константин</h4>
-                    </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Физика. Измерить длину экватора</h5>
-                        <ul class="list-unstyled mt-3 mb-4">
-                            <li>Задание 1 (фото)</li>
-                            <li>Задание 2 (Word)</li>
-                        </ul>
-                        <button type="button" class="btn btn-lg btn-block btn-outline-primary">Проверить</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <?php
+        $i++;
+        }
+        ?>
     </div>
 @endsection

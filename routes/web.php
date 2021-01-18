@@ -33,6 +33,10 @@ Route::middleware(['auth', 'EnsureUserHasRoleTeacher'])->group(function () {
         $model = Lesson::find($id);
         return MediaStream::create('lesson-files.zip')->addMedia($model->getMedia('files'));
     })->name('download');
+    // ЛК преподавателя
+    Route::get('/teaching', [TeachingController::class, 'index']);
+    // Домашние задания
+    Route::get('/homework', [HomeworkController::class, 'index'])->name('teacher-homework');
 });
 
 // Telegram bot
@@ -46,11 +50,4 @@ Route::delete("/telegram/bot/del", [TelegramController::class, "deleteBot"])
     ->name("delTelegramBot")
     ->middleware('auth');
 
-// Учительская
-Route::get('/teaching', [TeachingController::class, 'index']);
 
-// Домашние задания
-Route::get('/homework', [HomeworkController::class, 'index'])
-    ->name('teacher-homework')
-    ->middleware('auth')
-    ->middleware('EnsureUserHasRoleTeacher');
